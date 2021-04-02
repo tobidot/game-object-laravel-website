@@ -63,8 +63,8 @@ jobs:
           server:  ${{ secrets.FTP_SERVER }}
           port: 22 # default is 22
           ssh_private_key: ${{ secrets.FTP_PRIVATE_KEY }}
-          local_path: ./game-object/public/ # default is ./* 
-          remote_path: /game-object/ # default is /  
+          local_path: ./game-object/public/* # default is ./* 
+          remote_path: /public # default is /  
       
       - name: SFTP Deploy Resources
         uses: wlixcc/SFTP-Deploy-Action@v1.2.1
@@ -73,8 +73,8 @@ jobs:
           server:  ${{ secrets.FTP_SERVER }}
           port: 22 # default is 22
           ssh_private_key: ${{ secrets.FTP_PRIVATE_KEY }}
-          local_path: ./game-object/resources/ # default is ./*
-          remote_path: /game-object/ # default is /
+          local_path: ./game-object/resources/* # default is ./*
+          remote_path: /resources # default is /
       
       - name: SFTP Deploy Routes
         uses: wlixcc/SFTP-Deploy-Action@v1.2.1
@@ -83,8 +83,8 @@ jobs:
           server:  ${{ secrets.FTP_SERVER }}
           port: 22 # default is 22
           ssh_private_key: ${{ secrets.FTP_PRIVATE_KEY }}
-          local_path: ./game-object/routes/ # default is ./*
-          remote_path: /game-object/ # default is /  
+          local_path: ./game-object/routes/* # default is ./*
+          remote_path: /routes # default is /  
           
 #       - name: FTP Deploy
 #         # You may pin to the exact commit or the version.
