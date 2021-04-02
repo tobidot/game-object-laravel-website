@@ -51,9 +51,9 @@ jobs:
           # will put all file under this path
           local_path: ./game-object/app/ # default is ./*
           # files will copy to under remote_path
-          remote_path: /game-object/ # default is /
+          remote_path: / # default is /
           # sftp args
-#           args: # optional
+          args: -D /game-object/ # optional
 
           
       - name: SFTP Deploy Public
