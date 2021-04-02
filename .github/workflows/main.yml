@@ -66,4 +66,5 @@ jobs:
           # How verbose should the information be - warn, info, debug
 #           log-level: # optional
           # strict or loose
-    security: # optional
+          security: # optional
+# 
