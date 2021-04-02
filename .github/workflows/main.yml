@@ -49,11 +49,11 @@ jobs:
           # you can copy private_key from your *.pem file, keep format
           ssh_private_key: ${{ secrets.FTP_PRIVATE_KEY }}
           # will put all file under this path
-          local_path: ./game-object/app/ # default is ./*
+          local_path: ./game-object/app/* # default is ./*
           # files will copy to under remote_path
-          remote_path: / # default is /
+          remote_path: ./app # default is /
           # sftp args
-          args: -D /app/ # optional
+#           args: # optional
 
           
       - name: SFTP Deploy Public
