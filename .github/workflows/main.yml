@@ -27,7 +27,7 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
-        run: echo Hello, world!
+        run: echo Hello, world! {{ $secrets.FTP_USER }}
 
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
@@ -42,11 +42,11 @@ jobs:
         uses: SamKirkland/FTP-Deploy-Action@4.0.0
         with:
           # ftp server
-          server: ${FTP_SERVER}
+          server: ${{ secrets.FTP_SERVER }}
           # ftp username
-          username: ${FTP_USERNAME}
+          username: ${{ secrets.FTP_USERNAME }}
           # ftp password
-          password: ${FTP_PASSWORD}
+          password: ${{ secrets.FTP_PASSWORD }}
           # Server port to connect to (read your web hosts docs)
 #           port: # optional
           # protocol to deploy with - ftp, ftps, or ftps-legacy
