@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu-System Project</title>
+    <style>body {
+            background: lightgray;
+        }
+
+        label {
+            display: flex;
+        }
+
+        input {
+            width: 100%;
+        }
+
+        canvas {
+            display: flex;
+            max-width: calc(100vw - 16px);
+            max-height: calc(100vh - 16px);
+            width: min(100%, (100vh - 16px) * 4 / 3);
+            height: auto;
+            margin: auto;
+            justify-content: center;
+            align-items: center;
+        }</style>
+</head>
+
+<body>
+    <div id="app">
+        <canvas tabIndex="1" id="canvas" width="800" height="600"></canvas>
+    </div>
+    <script src="/ed009b6b86b017532ef0489c77de5100.js"></script>
+    <script>document.body.addEventListener('wheel', function (event) {
+  event.preventDefault();
+}, {
+  passive: false
+});
+document.body.addEventListener('keydown', function (event) {
+  event.preventDefault();
+});
+document.body.addEventListener('contextmenu', function (event) {
+  if (event.target instanceof HTMLCanvasElement) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+});</script>
+</body>
+
+</html>
