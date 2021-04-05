@@ -2,7 +2,7 @@
     <x-central-screen>
         <h1 class="text-3xl font-bold">Welcome</h1>
         @foreach( [
-            "Ants Simulation" => asset('games/ants-suimulation/index.html'),
+            "Ants Simulation" => asset('games/ants-simulation/index.html'),
             "Memory Game" => asset('games/memory/index.html'),
             "Menues Demo" => asset('games/menues/index.html'),
             "Zahlen Raten" => asset('games/zahlen-raten/index.html'),

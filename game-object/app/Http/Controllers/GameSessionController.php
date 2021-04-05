@@ -33,7 +33,7 @@ class GameSessionController extends Controller
     public function store(Request $request)
     {
         $validated = $this->validate($request, [
-            'name' => ['required', 'regex:/([a-z][A-Z][0-9])+/'],
+            'name' => ['required', 'regex:/([a-zA-Z0-9])+/'],
             'game_type' => ['required']
         ]);
 
@@ -45,11 +45,9 @@ class GameSessionController extends Controller
         $gameSession->session_token = $session_token;
         $gameSession->save();
 
-        session()->flash([
-            'message' => 'Created new GameSession'
-        ]);
+        session()->flash('message', 'Created new GameSession');
 
-        return redirect()->route('games-sessions.show', [
+        return redirect()->route('game-sessions.show', [
             'gameSession' => $gameSession
         ]);
     }

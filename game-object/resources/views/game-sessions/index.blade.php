@@ -9,17 +9,20 @@
         <x-page-title>
             Lobby List
         </x-page-title>
-        @forelse($gameSessions as $gameSession) 
-            <x-item-card>
-                
-            </x-item-card>
-        @empty
-            <x-item-card>
-                No Sessions Active
-            </x-item-card>
-        @endforelse
 
-        <div class="p-2 border-2 border-gray-800 m-2 rounded">
+        @if ($errors->any())
+            <x-section>
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            </x-section>
+        @endif
+
+        <x-section>
             <form 
             method="POST"
             action="{{route("game-sessions.store")}}" 
@@ -41,6 +44,30 @@
                     </x-button>
                 </div>
             </form>
-        </div>
+        </x-section>
+
+        
+
+        </x-section>
+            <ul>
+                @forelse($gameSessions as $gameSession) 
+                    <x-item-card>
+                        <x-slot name="title">
+                            {{$gameSession->name}}
+                        </x-slot>
+                        <x-slot name="title_info">
+                            {{$gameSession->game_type}}
+                        </x-slot>
+                        kuju
+                    </x-item-card>
+                @empty
+                    <x-item-card>
+                        <x-slot name="title">
+                            No Sessions Active
+                        </x-slot>
+                    </x-item-card>
+                @endforelse
+            </ul>
+        </x-section>
     </x-central-screen>
 </x-guest-layout>

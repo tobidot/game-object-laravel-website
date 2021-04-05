@@ -31,14 +31,14 @@ Route::group([], function () {
      * Games
      */
 
-    Route::get('game-session/{gameSession}', [GameSessionController::class, 'show'])
+    Route::get('game-sessions/{gameSession}', [GameSessionController::class, 'show'])
         ->whereNumber('gameSession')
         ->name('game-sessions.show');
-    Route::get('game-session', [GameSessionController::class, 'index'])
+    Route::get('game-sessions', [GameSessionController::class, 'index'])
         ->name('game-sessions');
-    Route::get('game-session/create', [GameSessionController::class, 'create'])
+    Route::get('game-sessions/create', [GameSessionController::class, 'create'])
         ->name('game-sessions.create');
-    Route::post('game-session/store', [GameSessionController::class, 'store'])
+    Route::post('game-sessions/store', [GameSessionController::class, 'store'])
         ->name('game-sessions.store');
 });
 
