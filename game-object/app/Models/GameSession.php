@@ -36,4 +36,9 @@ class GameSession extends Model
     {
         return $this->hasMany(MapField::class);
     }
+
+    public function players(): HasMany
+    {
+        return $this->hasMany(Player::class);
+    }
 }

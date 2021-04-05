@@ -13,7 +13,7 @@ class GameSessionController extends Controller
     public function index()
     {
         return view('game-sessions.index', [
-            'gameSessions' => GameSession::query()->get(),
+            'gameSessions' => GameSession::query()->where('is_private', false)->get(),
         ]);
     }
 

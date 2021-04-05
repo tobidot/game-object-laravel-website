@@ -32,7 +32,7 @@ $td_class = "p-1 border-2 border-gray-400 font-bold text-center";
                     </tr>
                     <tr>
                         <td class="{{$th_class}}" scope="col">Players</td>
-                        <td class="{{$td_class}}">1 / 1</td>
+                        <td class="{{$td_class}}">{{$gameSession->players()->count()}} / {{$gameSession->max_players}}</td>
                     </tr>
                     <tr>
                         <td class="{{$th_class}}" scope="col">Session Link</td>
@@ -44,8 +44,20 @@ $td_class = "p-1 border-2 border-gray-400 font-bold text-center";
 
         <x-section>
             <h3>
-
+                Players in Lobby
             </h3>
+            <ul>
+                @forelse ($gameSession->players as $index => $player)
+                    <li class="flex flex-nowrap">
+                        <svg viewBox="0 0 10 10"><text>{{$player->avatar_id}}</text></svg>
+                        <h4>{{$player->display_name}}</h4>
+                    </li>
+                @empty
+                    <li>
+                        No Players joined
+                    </li>
+                @endforelse
+            </ul>
         </x-section>
     </x-central-screen>
 </x-guest-layout>
