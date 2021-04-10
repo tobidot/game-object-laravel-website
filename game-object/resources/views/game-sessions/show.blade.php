@@ -53,7 +53,7 @@ $td_class = "p-1 border-2 border-gray-400 font-bold text-center";
                 @forelse ($gameSession->players as $index => $player)
                     <li class="flex flex-nowrap">
                         <x-player-avatar :player="$player"></x-player-avatar>
-                        <h4 class="flex justify-center items-center">{{$player->display_name}}</h4>
+                        <h4 class="flex justify-center items-center px-2 text-l font-bold">{{$player->display_name}}</h4>
                     </li>
                 @empty
                     <li>

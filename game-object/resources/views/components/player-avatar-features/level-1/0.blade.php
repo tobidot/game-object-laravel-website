@@ -2,4 +2,4 @@
     'color' => '#ff0000'
 ])
 
-<rect x="33" y="33" width="33" height="33" rx="9" fill="{{$color}}" />
+<rect x="30" y="30" width="40" height="40" rx="9" fill="{{$color}}" />
