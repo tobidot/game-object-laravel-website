@@ -34,6 +34,9 @@ Route::group([], function () {
     Route::get('game-sessions/{gameSession}', [GameSessionController::class, 'show'])
         ->whereNumber('gameSession')
         ->name('game-sessions.show');
+    Route::post('game-sessions/{gameSession}/join/', [GameSessionController::class, 'join'])
+        ->whereNumber('gameSession')
+        ->name('game-sessions.join');
     Route::get('game-sessions', [GameSessionController::class, 'index'])
         ->name('game-sessions');
     Route::get('game-sessions/create', [GameSessionController::class, 'create'])

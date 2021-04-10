@@ -10,17 +10,8 @@
             Lobby List
         </x-page-title>
 
-        @if ($errors->any())
-            <x-section>
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            </x-section>
-        @endif
+        <x-input-validation-error-section>
+        </x-input-validation-error-section>
 
         <x-section>
             <form 
@@ -46,9 +37,8 @@
             </form>
         </x-section>
 
-        
 
-        </x-section>
+        <x-section>
             <ul>
                 @forelse($gameSessions as $gameSession) 
                     <x-item-card>
@@ -58,7 +48,6 @@
                         <x-slot name="title_info">
                             {{$gameSession->game_type}}
                         </x-slot>
-                        kuju
                     </x-item-card>
                 @empty
                     <x-item-card>
@@ -68,6 +57,6 @@
                     </x-item-card>
                 @endforelse
             </ul>
-        </x-section>
+        </x-section> 
     </x-central-screen>
 </x-guest-layout>

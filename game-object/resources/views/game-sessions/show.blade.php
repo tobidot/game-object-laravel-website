@@ -16,6 +16,9 @@ $td_class = "p-1 border-2 border-gray-400 font-bold text-center";
             Game Lobby : {{$gameSession->name}}
         </x-page-title>
 
+        <x-input-validation-error-section>
+        </x-input-validation-error-section>
+
         <x-section>
             <h3>
                 Session Status:
@@ -49,8 +52,8 @@ $td_class = "p-1 border-2 border-gray-400 font-bold text-center";
             <ul>
                 @forelse ($gameSession->players as $index => $player)
                     <li class="flex flex-nowrap">
-                        <svg viewBox="0 0 10 10"><text>{{$player->avatar_id}}</text></svg>
-                        <h4>{{$player->display_name}}</h4>
+                        <x-player-avatar :player="$player"></x-player-avatar>
+                        <h4 class="flex justify-center items-center">{{$player->display_name}}</h4>
                     </li>
                 @empty
                     <li>
@@ -58,6 +61,25 @@ $td_class = "p-1 border-2 border-gray-400 font-bold text-center";
                     </li>
                 @endforelse
             </ul>
+            <form method="POST" 
+                action="{{route("game-sessions.join", ['gameSession' => $gameSession->id])}}"
+                class="flex flex-row border-t-2 border-gray-800"
+                >        
+                @csrf        
+                <label class="w-1/3">
+                    Display Name
+                    <input name="display_name" type="text" value="Anon" class="w-full">
+                </label>
+                <label class="w-1/3">
+                    Password
+                    <input name="password" type="password" placeholder="secure" class="w-full">
+                </label>
+                <div class="flex w-1/3 justify-center items-center">
+                    <x-button class="w-16 h-8">
+                        Join
+                    </x-button>
+                </div>
+            </form>
         </x-section>
     </x-central-screen>
 </x-guest-layout>
