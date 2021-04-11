@@ -13,6 +13,11 @@ class PlayerAuthenticationService
         return $this->player;
     }
 
+    public function checkPassword(Player $player, string $password): bool
+    {
+        return $player->password === $password;
+    }
+
     public function authenticate(): ?Player
     {
         $auth_token = session('auth_token', request()->get('auth_token', null));

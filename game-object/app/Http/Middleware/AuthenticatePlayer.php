@@ -18,12 +18,12 @@ class AuthenticatePlayer
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle(Request $request, Closure $next, string $type)
+    public function handle(Request $request, Closure $next, ?string $type = null)
     {
         /** @var PlayerAuthenticationService $player_authentication */
         $player_authentication = App::make(PlayerAuthenticationService::class);
         $player = $player_authentication->authenticate();
-        if ($type !== "") {
+        if (!empty($type)) {
             if ($player === null) throw new AuthorizationException();
         }
 

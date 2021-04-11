@@ -55,20 +55,44 @@ $td_class = "p-1 border-2 border-gray-400 font-bold text-center";
             </h3>
             <ul>
                 @forelse ($gameSession->players as $index => $it_player)
-                    <li class="flex flex-nowrap @if($it_player->id === $player->id)bg-green-200 my-2 @endif">
+                    <?php 
+                    $active_player = !empty($player) && $it_player->id === $player->id; 
+                    ?>
+                    <li class="flex flex-nowrap @if( $active_player)bg-green-200 my-2 @endif">
                         <x-player-avatar :player="$it_player"></x-player-avatar>
                         <h4 class="flex justify-center items-center px-2 text-l font-bold">
                             {{$it_player->display_name}}
-                            @if($it_player->id === $player->id) 
+                            @if( $active_player) 
                                 <span class="text-yellow-800">(You)</span>
                             @endif
                         </h4>
                         
-                        @if($it_player->id === $player->id) 
+                        @if( $active_player) 
                             <a href="{{ asset("games/{$gameSession->game_type}/index.html") 
                                 . "?game-session={$gameSession->id}&auth-token={$player->auth_token}"
                             }}"
-                            ><x-button>Enter Game</x-button></a>
+                            class="m-auto"
+                            ><x-button class="">Enter Game</x-button></a>
+                        @endif
+                        @if($canJoin)
+                            <div class="ml-auto">
+                                <form action="{{route("players.authenticate", ["player" => $it_player->id])}}" method="POST"
+                                    class="flex flex-wrap flex-row w-64"
+                                    >
+                                    @csrf        
+                                    <label hidden>
+                                        Display Name
+                                        <input name="display_name" type="text" value="{{$it_player->display_name}}" class="w-full">
+                                    </label>
+                                    <label class="w-2/3 text-sm">
+                                        Password
+                                        <input name="password" type="password" placeholder="player password" 
+                                        class="w-full text-sm h-6 p-1"
+                                        >
+                                    </label>
+                                    <x-button class="m-auto">Login</x-button>
+                                </form>
+                            </div>
                         @endif
                     </li>
                 @empty

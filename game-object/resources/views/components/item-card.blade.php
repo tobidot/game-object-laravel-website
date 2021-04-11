@@ -22,4 +22,4 @@
             {{ $slot }}
         </summary>
     </div>
-</summary>
+</li>

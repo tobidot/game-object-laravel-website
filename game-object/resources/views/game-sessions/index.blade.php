@@ -46,13 +46,16 @@
         <x-section>
             <ul>
                 @forelse($gameSessions as $gameSession) 
-                    <x-item-card>
+                <x-item-card>
                         <x-slot name="title">
                             {{$gameSession->name}}
                         </x-slot>
                         <x-slot name="title_info">
                             {{$gameSession->game_type}}
                         </x-slot>
+                        <a href="{{route("game-sessions.show", ['gameSession' => $gameSession->id])}}">
+                            <x-button>Open</x-button>
+                        </a>
                     </x-item-card>
                 @empty
                     <x-item-card>
