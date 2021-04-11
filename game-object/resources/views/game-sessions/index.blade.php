@@ -27,7 +27,12 @@
                     Game
                 </label>
                 <select required id="game_type" name="game_type">
-                    <option value="gogo-bum">Gogo Bum</option>
+                    @foreach ([
+                        "db-test" => "DB Test",
+                        "memory" => "Memory",
+                    ] as $value => $display)
+                        <option value="{{$value}}">{{$display}}</option>
+                    @endforeach
                 </select>
                 <div class="py-2">
                     <x-button>

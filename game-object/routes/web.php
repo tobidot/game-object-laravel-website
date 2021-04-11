@@ -26,7 +26,9 @@ Route::group([], function () {
 });
 
 
-Route::group([], function () {
+Route::group([
+    'middleware' => ['player']
+], function () {
     /**
      * Games
      */

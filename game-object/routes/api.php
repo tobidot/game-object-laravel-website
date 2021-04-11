@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\GameSessionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +15,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group([
+    'middleware' => ['player:required'],
+], function () {
+    Route::post('game-sessions/{gameSession}/fields', [GameSessionController::class, 'getFields'])
+        ->whereNumber('gameSession');
+    Route::post('game-sessions/{gameSession}/data', [GameSessionController::class, 'getData'])
+        ->whereNumber('gameSession');
+    Route::post('game-sessions/{gameSession}', [GameSessionController::class, 'getGameSession'])
+        ->whereNumber('gameSession');
+    Route::post('/user', function (Request $request) {
+        return response()->json([
+            'success' => true,
+            'player' => player(),
+        ]);
+    });
 });

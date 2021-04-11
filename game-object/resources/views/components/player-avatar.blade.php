@@ -22,7 +22,7 @@
     $off_color3 = $color_pallete[ ($cid3+1) % $color_max];
 ?>
   
-<svg viewBox="0 0 100 100" class="h-12 w-12">
+<svg viewBox="0 0 100 100" class="h-12 w-12 border border-black rounded-sm bg-white">
 
     <x-dynamic-component :component='"player-avatar-features.level-1.$feature1"' :color="$color1">
     </x-dynamic-component>

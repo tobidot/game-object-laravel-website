@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Services\PlayerAuthenticationService;
+use AuthenticatedPlayerService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -13,7 +15,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->singleton(PlayerAuthenticationService::class, function () {
+            return new PlayerAuthenticationService();
+        });
     }
 
     /**
@@ -23,6 +27,5 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
     }
 }
