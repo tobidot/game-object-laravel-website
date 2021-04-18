@@ -22,6 +22,24 @@ window.onload = (() => {
         api.get_variables(player_points).then((points) => {
             console.log(points);
         });
+        api.get_fields([{ x: 0, y: 0 }, { x: 1, y: 0 }]).then(fields => {
+            console.log(fields);
+        });
+
+        const field_types = ["low", "med", "high"];
+        const map = document.createElement('div');
+        map.className = "map";
+        api.get_fields([]).then(fields => {
+            console.log(fields);
+            fields.forEach((field) => {
+                const field_el = document.createElement('div');
+                field_el.className = "field field-type--" + field_types[field.base_type];
+                field_el.setAttribute('data-x', field.x.toString());
+                field_el.setAttribute('data-y', field.y.toString());
+                map.append(field_el);
+            });
+        });
+        app.appendChild(map);
     });
 
 });
@@ -70,6 +88,14 @@ class GameServerApi {
         const target = this.base_uri + "/data";
         const data = {
             variables: list
+        };
+        return this.standard_fetch(target, data);
+    }
+
+    get_fields(list) {
+        const target = this.base_uri + "/fields";
+        const data = {
+            fields: list
         };
         return this.standard_fetch(target, data);
     }

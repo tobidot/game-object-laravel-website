@@ -29,7 +29,17 @@ class MapField extends Model
 {
     use HasFactory;
 
-    public $casts = [
-        'data' => 'json'
+    public $timestamps = false;
+
+    protected $fillable = [
+        'x',
+        'y',
+        'base_type',
+        'data',
+        'game_session_id',
+    ];
+
+    protected $casts = [
+        'data' => 'array'
     ];
 }

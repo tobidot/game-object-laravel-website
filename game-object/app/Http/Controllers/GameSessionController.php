@@ -138,6 +138,20 @@ class GameSessionController extends Controller
         ]);
     }
 
+    public function getMe(GameSession $gameSession)
+    {
+        $this->authorize('view', $gameSession);
+        $player = player();
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'id' => $player->id,
+                'display_name' => $player->display_name,
+                'data' => $player->data,
+            ]
+        ]);
+    }
+
     public function getData(GameSession $gameSession, Request $request)
     {
         $this->authorize('view', $gameSession);
@@ -169,19 +183,22 @@ class GameSessionController extends Controller
         $this->authorize('view', $gameSession);
         $parameters = $request->validate([
             'fields' => ['array'],
-            'fields.x' => ['required', 'numeric'],
-            'fields.y' => ['required', 'numeric'],
+            'fields.*.x' => ['required', 'numeric'],
+            'fields.*.y' => ['required', 'numeric'],
         ]);
 
+        /** @var Builder $query */
         $query = $gameSession->mapFields()->select('x', 'y', 'base_type', 'data');
 
-        foreach ($parameters['fields'] as $field) {
-            $query->orWhere(function (Builder $query) use ($field) {
-                return $query
-                    ->where('x', $field['x'])
-                    ->where('y', $field['y']);
-            });
-        }
+        $query->where(function (Builder $query) use ($parameters) {
+            foreach ($parameters['fields'] as $field) {
+                $query->orWhere(function (Builder $query) use ($field) {
+                    return $query
+                        ->where('x', $field['x'])
+                        ->where('y', $field['y']);
+                });
+            }
+        });
 
         return response()->json([
             'success' => true,

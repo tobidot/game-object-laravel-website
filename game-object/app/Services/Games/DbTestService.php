@@ -5,6 +5,7 @@ namespace App\Services\Games;
 
 use App\Models\GameSession;
 use App\Models\GameVariable;
+use App\Models\MapField;
 use App\Models\Player;
 use App\Services\Games\GameService;
 use Illuminate\Support\Facades\Validator;
@@ -19,6 +20,18 @@ class DbTestService extends GameService
 
     public function newGame(ParameterBag $parameters)
     {
+        $field_types = ["low", "med", "high",];
+        for ($x = 0; $x < 5; ++$x) {
+            for ($y = 0; $y < 5; ++$y) {
+                $field = MapField::create([
+                    'x' => $x,
+                    'y' => $y,
+                    'base_type' => random_int(0, count($field_types) - 1),
+                    'data' => [],
+                    'game_session_id' => $this->gameSession->id,
+                ]);
+            }
+        }
     }
 
     public function newPlayer(Player $player, ParameterBag $parameters)
