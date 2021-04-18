@@ -14,7 +14,7 @@ class AddDataToGameSessionsTable extends Migration
     public function up()
     {
         Schema::table('game_sessions', function (Blueprint $table) {
-            $table->json('data');
+            $table->text('data');
         });
     }
 

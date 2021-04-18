@@ -19,7 +19,7 @@ class CreateGameVariablesTable extends Migration
             $table->timestamps();
             $table->foreignIdFor(GameSession::class);
             $table->string("key", 255);
-            $table->json("value");
+            $table->text("value");
         });
     }
 

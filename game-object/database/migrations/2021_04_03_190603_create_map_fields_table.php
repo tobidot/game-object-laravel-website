@@ -20,7 +20,7 @@ class CreateMapFieldsTable extends Migration
             $table->integer('x');
             $table->integer('y');
             $table->integer('base_type');
-            $table->json('data');
+            $table->text('data');
         });
     }
 

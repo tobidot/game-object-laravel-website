@@ -14,7 +14,7 @@ class AddDataToPlayersTable extends Migration
     public function up()
     {
         Schema::table('players', function (Blueprint $table) {
-            $table->json('data');
+            $table->text('data');
         });
     }
 

@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
@@ -19,6 +18,8 @@ class GameSessionController extends Controller
 
     public function index()
     {
+        DB::select(DB::raw("SELECT * from `game_sessions`"));
+        DB::table('game_sessions')->select()->get()->first();
         return view('game-sessions.index', [
             'gameSessions' => GameSession::query()->where('is_private', false)->get(),
         ]);
@@ -53,6 +54,7 @@ class GameSessionController extends Controller
             $gameSession->name = $validated['name'];
             $gameSession->game_type = $validated['game_type'];
             $gameSession->session_token = $session_token;
+            $gameSession->last_update_step_at = now();
             $gameSession->data = [];
             $gameSession->save();
             $gameSession->getGameService()->newGame($request->json());

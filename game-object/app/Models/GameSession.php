@@ -38,7 +38,8 @@ class GameSession extends Model
     use HasFactory;
 
     protected $casts = [
-        'data' => 'array'
+        'data' => 'array',
+        'last_update_step_at' => 'datetime',
     ];
 
     protected ?GameService $gameService = null;
