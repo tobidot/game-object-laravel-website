@@ -76,4 +76,15 @@ class DbTestService extends GameService
             ]
         ]);
     }
+
+    public function update()
+    {
+        $points = $this->gameSession->gameVariables()->where('key', 'like', 'player_%')->get(['id', 'value']);
+        foreach ($points as $pointVar) {
+            $value = $pointVar->value;
+            $value['points']--;
+            $pointVar->value = $value;
+            $pointVar->save();
+        }
+    }
 }

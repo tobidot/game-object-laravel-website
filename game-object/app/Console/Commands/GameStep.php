@@ -41,15 +41,7 @@ class GameStep extends Command
     public function handle()
     {
         GameSession::query()->get()->each(function (GameSession $gameSession) {
-            /**
-             * @var Carbon $created_at
-             */
-            Log::info("Schedule at ", ['now' => now()]);
-            $created_at = $gameSession->created_at;
-            if (now()->greaterThan($created_at->addMinutes(120))) {
-                echo "Session $gameSession->id closed \n";
-                $gameSession->delete();
-            }
+            $gameSession->getGameService()->iregularUpdate();
         });
         return 0;
     }
