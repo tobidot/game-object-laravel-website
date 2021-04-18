@@ -2,9 +2,14 @@
 
 namespace App\Models;
 
+use App\Exceptions\GoInvalidGameTypeException;
+use App\Services\Games\GameService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Str;
+use Throwable;
 
 /**
  * App\Models\GameSession
@@ -32,13 +37,38 @@ class GameSession extends Model
 {
     use HasFactory;
 
+    protected $casts = [
+        'data' => 'array'
+    ];
+
+    protected ?GameService $gameService = null;
+
     public function mapFields(): HasMany
     {
         return $this->hasMany(MapField::class);
     }
 
+    public function gameVariables(): HasMany
+    {
+        return $this->hasMany(GameVariable::class);
+    }
+
     public function players(): HasMany
     {
         return $this->hasMany(Player::class);
+    }
+
+    public function getGameService(): GameService
+    {
+        if ($this->gameService) return $this->gameService;
+        $game_service_class = 'App\\Services\\Games\\' . Str::studly($this->game_type) . 'Service';
+        try {
+            $game_service = App::make($game_service_class);
+        } catch (Throwable $e) {
+            $game_service = null;
+        }
+        if ($game_service === null) throw new GoInvalidGameTypeException($this->game_type, $game_service_class);
+        $game_service->gameSession = $this;
+        return $this->gameService = $game_service;
     }
 }

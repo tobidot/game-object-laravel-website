@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\GameSession;
 use App\Models\Player;
+use App\Services\DbTestService;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
@@ -25,12 +27,10 @@ class GameSessionController extends Controller
     public function show(GameSession $gameSession)
     {
         $player = player();
-        // dd($player);
-        // dd($gameSession->players()->where('id', $player->id)->count());
         return view('game-sessions.show', [
             'gameSession' => $gameSession,
             'canJoin' => $player === null || $gameSession->players()->where('id', $player->id)->count() === 0,
-            'message' => session()->get('message') ?? '',
+            'messages' => session()->get('messages') ?? '',
         ]);
     }
 
@@ -49,10 +49,14 @@ class GameSessionController extends Controller
         $session_token = Str::uuid();
 
         $gameSession = new GameSession();
-        $gameSession->name = $validated['name'];
-        $gameSession->game_type = $validated['game_type'];
-        $gameSession->session_token = $session_token;
-        $gameSession->save();
+        DB::transaction(function () use ($validated, $session_token, $request, $gameSession) {
+            $gameSession->name = $validated['name'];
+            $gameSession->game_type = $validated['game_type'];
+            $gameSession->session_token = $session_token;
+            $gameSession->data = [];
+            $gameSession->save();
+            $gameSession->getGameService()->newGame($request->json());
+        });
 
         session()->flash('message', 'Created new GameSession');
 
@@ -86,18 +90,22 @@ class GameSessionController extends Controller
         if (!$auth_token) session()->put("auth_token", $auth_token = Str::uuid());
 
         $player = new Player();
-        $player->display_name = $parameters['display_name'];
-        $player->password = $parameters['password'];
-        $player->avatar_id = hexdec(substr(md5($parameters['display_name']), 0, 4)) & 0x7fff;
-        $player->auth_token = $auth_token;
-        $gameSession->players()->save($player);
+        DB::transaction(function () use ($parameters, $auth_token, $gameSession, $request, $player) {
+            $player->display_name = $parameters['display_name'];
+            $player->password = $parameters['password'];
+            $player->avatar_id = hexdec(substr(md5($parameters['display_name']), 0, 4)) & 0x7fff;
+            $player->auth_token = $auth_token;
+            $player->data = [];
+            $gameSession->players()->save($player);
+            $gameSession->getGameService()->newPlayer($player, $request->json());
+        });
 
         return redirect()->route('game-sessions.show', [
             'gameSession' => $gameSession
         ]);
     }
 
-    public function join_via_session_token(string $sessionToken, Request $request)
+    public function joinViaSessionToken(string $sessionToken, Request $request)
     {
         $game_session = GameSession::query()->where('session_token', $sessionToken)->firstOrFail();
         return $this->join($game_session, $request);
@@ -117,6 +125,17 @@ class GameSessionController extends Controller
         ]);
     }
 
+    public function getPlayers(GameSession $gameSession, Request $request)
+    {
+        $this->authorize('view', $gameSession);
+
+        $players = $gameSession->players()->get(['display_name', 'id'])->all();
+        return response()->json([
+            'success' => true,
+            'data' => $players
+        ]);
+    }
+
     public function getData(GameSession $gameSession, Request $request)
     {
         $this->authorize('view', $gameSession);
@@ -124,10 +143,22 @@ class GameSessionController extends Controller
             'variables' => ['array']
         ]);
 
-        $variables = $gameSession->gameVariables()->whereIn('key', $parameters['variables'])->get('key', 'value')->all();
+        $variables = $gameSession->gameVariables()
+            ->whereIn('key', $parameters['variables'])
+            ->get(['key', 'value'])
+            ->all();
+
+        $data = [];
+        foreach ($parameters['variables'] as $variable_name) {
+            $data[$variable_name] = null;
+        }
+        foreach ($variables as $variable) {
+            $data[$variable->key] = $variable->value;
+        }
+
         return response()->json([
             'success' => true,
-            'data' => $variables
+            'data' => $data
         ]);
     }
 
@@ -140,7 +171,7 @@ class GameSessionController extends Controller
             'fields.y' => ['required', 'numeric'],
         ]);
 
-        $query = $gameSession->mapFields()->select('x', 'y', 'base_type', 'base_type');
+        $query = $gameSession->mapFields()->select('x', 'y', 'base_type', 'data');
 
         foreach ($parameters['fields'] as $field) {
             $query->orWhere(function (Builder $query) use ($field) {
@@ -154,5 +185,11 @@ class GameSessionController extends Controller
             'success' => true,
             'data' => $query->get()->all()
         ]);
+    }
+
+    public function playerAction(GameSession $gameSession, Request $request)
+    {
+        $player = player();
+        return $gameSession->getGameService()->handle($player, $request->json());
     }
 }

@@ -21,6 +21,7 @@ class PlayerAuthenticationService
     public function authenticate(): ?Player
     {
         $auth_token = session('auth_token', request()->get('auth_token', null));
+        session('auth_token', $auth_token);
         if (empty($auth_token)) return null;
         $this->player = Player::query()->where('auth_token', $auth_token)->first();
         return $this->player;

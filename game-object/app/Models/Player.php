@@ -10,6 +10,10 @@ class Player extends Model
 {
     use HasFactory;
 
+    protected $casts = [
+        'data' => 'array'
+    ];
+
     public function gameSession(): BelongsTo
     {
         return $this->belongsTo(GameSession::class);

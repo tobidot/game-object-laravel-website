@@ -23,8 +23,8 @@ class PlayerController extends Controller
         if (!$success) {
             return back()->withErrors('Incorrect password');
         }
-        return back()->with([
-            'message' => 'Successful authenticated'
-        ]);
+        session()->put("auth_token", $player->auth_token);
+        session()->flash('messages', ['Created new GameSession']);
+        return back();
     }
 }

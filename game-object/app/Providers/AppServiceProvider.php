@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
+use App\Services\Games\DbTestService;
 use App\Services\PlayerAuthenticationService;
-use AuthenticatedPlayerService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -17,6 +17,9 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->singleton(PlayerAuthenticationService::class, function () {
             return new PlayerAuthenticationService();
+        });
+        $this->app->singleton(DbTestService::class, function () {
+            return new DbTestService();
         });
     }
 
