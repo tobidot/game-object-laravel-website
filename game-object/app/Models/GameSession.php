@@ -32,6 +32,18 @@ use Throwable;
  * @method static \Illuminate\Database\Eloquent\Builder|GameSession whereSessionToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder|GameSession whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property int $max_players
+ * @property int $is_private
+ * @property array $data
+ * @property \Illuminate\Support\Carbon $last_update_step_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\GameVariable[] $gameVariables
+ * @property-read int|null $game_variables_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Player[] $players
+ * @property-read int|null $players_count
+ * @method static \Illuminate\Database\Eloquent\Builder|GameSession whereData($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|GameSession whereIsPrivate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|GameSession whereLastUpdateStepAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|GameSession whereMaxPlayers($value)
  */
 class GameSession extends Model
 {

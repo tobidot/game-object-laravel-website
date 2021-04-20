@@ -1,4 +1,6 @@
 {
     "/js/app.js": "/js/app.js",
-    "/css/app.css": "/css/app.css"
+    "/games/med-tiva/index.js": "/games/med-tiva/index.js",
+    "/css/app.css": "/css/app.css",
+    "/games/med-tiva/index.html": "/games/med-tiva/index.html"
 }

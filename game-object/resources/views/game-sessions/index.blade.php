@@ -29,6 +29,7 @@
                 <select required id="game_type" name="game_type">
                     @foreach ([
                         "db-test" => "DB Test",
+                        "med-tiva" => "Med Tiva",
                         "memory" => "Memory",
                     ] as $value => $display)
                         <option value="{{$value}}">{{$display}}</option>
