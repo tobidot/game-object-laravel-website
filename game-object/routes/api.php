@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\Route;
 Route::group([
     'middleware' => ['player:required'],
 ], function () {
+    Route::post('game-sessions/{gameSession}/me', [GameSessionController::class, 'getMe'])
+        ->whereNumber('gameSession');
     Route::post('game-sessions/{gameSession}/players', [GameSessionController::class, 'getPlayers'])
         ->whereNumber('gameSession');
     Route::post('game-sessions/{gameSession}/fields', [GameSessionController::class, 'getFields'])

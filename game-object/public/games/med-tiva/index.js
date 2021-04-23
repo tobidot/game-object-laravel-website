@@ -205,6 +205,12 @@ function () {
     });
   };
 
+  GameServerApi.prototype.get_me = function () {
+    var target = this.base_uri + "/me";
+    var data = {};
+    return this.standard_fetch(target, data);
+  };
+
   GameServerApi.prototype.get_players = function () {
     var target = this.base_uri + "/players";
     var data = {};
@@ -312,6 +318,7 @@ var GameServerApi_1 = __webpack_require__(/*! ../utils/GameServerApi */ "./resou
 
 console.log("initialize Med-Tiva");
 var api = new GameServerApi_1.GameServerApi();
+window.api = api;
 })();
 
 /******/ })()

@@ -2,6 +2,8 @@
 
 namespace App\Services\Games\MedTiva;
 
+use App\Services\Games\Utils\TypeHint;
+
 class MedTivaFieldBaseType
 {
     public const PLAIN = 0;

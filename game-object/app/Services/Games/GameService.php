@@ -11,6 +11,11 @@ abstract class GameService
 {
     public GameSession $gameSession;
 
+    public function __construct()
+    {
+        $this->iregularUpdate();
+    }
+
     public abstract function newGame(ParameterBag $parameters);
 
     public abstract function newPlayer(Player $player, ParameterBag $parameters);

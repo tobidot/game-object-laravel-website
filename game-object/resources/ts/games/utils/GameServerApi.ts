@@ -44,6 +44,12 @@ export class GameServerApi {
         });
     }
 
+    public get_me(): object {
+        const target = this.base_uri + "/me";
+        const data = {};
+        return this.standard_fetch(target, data);
+    }
+
     public get_players(): object {
         const target = this.base_uri + "/players";
         const data = {};

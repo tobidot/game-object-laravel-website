@@ -2,7 +2,9 @@
 
 namespace App\Services\Games\MedTiva;
 
-class MedTivaCityData
+use App\Services\Games\Utils\TypeHint;
+
+class MedTivaCityData extends TypeHint
 {
     public int $player_id;
     public MedTivaBuildingBag $buildings;

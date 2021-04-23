@@ -2,7 +2,9 @@
 
 namespace App\Services\Games\MedTiva;
 
-class MedTivaUnit
+use App\Services\Games\Utils\TypeHint;
+
+class MedTivaUnit extends TypeHint
 {
     public int $count;
     public int $level;

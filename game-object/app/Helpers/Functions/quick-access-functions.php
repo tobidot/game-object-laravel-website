@@ -6,5 +6,5 @@ use Illuminate\Support\Facades\App;
 
 function player(): ?Player
 {
-    return App::make(PlayerAuthenticationService::class)->player();
+    return resolve(PlayerAuthenticationService::class)->player();
 }
