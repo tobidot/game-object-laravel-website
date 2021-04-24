@@ -6,13 +6,21 @@ namespace App\Services\Games;
 use App\Models\MapField;
 use App\Models\Player;
 use App\Services\Games\GameService;
-use App\Services\Games\MedTiva\MedTivaCaveData;
-use Symfony\Component\HttpFoundation\ParameterBag;
-use App\Services\Games\MedTiva\MedTivaCityData;
-use App\Services\Games\MedTiva\MedTivaFieldBaseType;
-use App\Services\Games\MedTiva\MedTivaPlainData;
-use App\Services\Games\MedTiva\MedTivaPlayerData;
+use App\Services\Games\MedTiva\Consts\MedTivaFieldBaseType;
+use App\Services\Games\MedTiva\Consts\MedTivaUnitType;
 use App\Services\Games\MedTiva\MedTivaUpdateBuffer;
+use Symfony\Component\HttpFoundation\ParameterBag;
+use App\Services\Games\MedTiva\types\MedTivaCaveData;
+use App\Services\Games\MedTiva\Types\MedTivaCityData;
+use App\Services\Games\MedTiva\Types\MedTivaPlainData;
+use App\Services\Games\MedTiva\Types\MedTivaPlayerData;
+use App\Services\Games\MedTiva\Types\MedTivaUnit;
+use App\Services\Games\MedTiva\Types\MedTivaUnitBag;
+use App\Services\Games\MedTiva\Types\MedTivaUnitBagData;
+use App\Services\Games\MedTiva\Types\MedTivaUnitTypeData;
+use Exception;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 /**
@@ -41,10 +49,6 @@ class MedTivaService extends GameService
         $data->buildings->hut->level = 1;
         $field->data = $data->toArray();
         $field->save();
-    }
-
-    public function handle(Player $player, ParameterBag $parameters)
-    {
     }
 
     public function update()
@@ -137,5 +141,161 @@ class MedTivaService extends GameService
             'data' => $data,
             'game_session_id' => $this->gameSession->id,
         ]);
+    }
+
+    public function handleAction(Player $player, string $action_type, array $action_data): JsonResponse
+    {
+        switch ($action_type) {
+
+            case 'build':
+                return $this->handleBuild(
+                    $player,
+                    $action_data['x'] ?? 0,
+                    $action_data['y'] ?? 0,
+                    $action_data['building'] ?? ''
+                );
+
+            case 'recruit':
+                return $this->handleRecruit(
+                    $player,
+                    $action_data['x'] ?? 0,
+                    $action_data['y'] ?? 0,
+                    $action_data['unit'] ?? '',
+                    $action_data['amount'] ?? 0
+                );
+
+            case 'move':
+                return $this->handleMove(
+                    $player,
+                    $action_data['x'] ?? 0,
+                    $action_data['y'] ?? 0,
+                    $action_data['target_x'] ?? 0,
+                    $action_data['target_y'] ?? 0,
+                    new MedTivaUnitBagData($action_data['units'] ?? [])
+                );
+        }
+        return response()->json([
+            'success' => false,
+            'reason' => 'Unknown action_type ' . $action_type,
+        ]);
+    }
+
+
+    public function handleRecruit(
+        Player $player,
+        int $x,
+        int $y,
+        string $unit,
+        int $amount,
+    ): JsonResponse {
+        if ($amount < 1) return $this->errorInvalidArgument('Amount should be greater than 1', $amount);
+        if (property_exists(MedTivaUnitBag::class, $unit) === false) return $this->errorInvalidUnitType($unit);
+        $field = $this->gameSession->mapFieldAt($x, $y);
+        if ($field === null) return $this->errorInvalidField($x, $y);
+        if ($field->base_type !== MedTivaFieldBaseType::CITY) return $this->errorInvalidField($x, $y);
+        $field_data = new MedTivaCityData($field->data);
+        if ($field_data->player_id !== $player->id) return $this->errorInvalidField($x, $y);
+
+        /** @var MedTivaUnit $unit_data */
+        $unit_data = $field_data->units->$unit;
+        $cost = MedTivaUnitType::FOOTMAN->getUnitCostAtLevel($unit_data->level) * $amount;
+        $player_data = new MedTivaPlayerData($player->data);
+
+        if ($player_data->gold < $cost) {
+            return $this->error('Not Enough Gold');
+        }
+
+        $player_data->gold -= $cost;
+        $unit_data->count += $amount;
+
+        $field->data = $field_data->toArray();
+        $player->data = $player_data->toArray();
+
+        DB::beginTransaction();
+        $field->save();
+        $player->save();
+        DB::commit();
+
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'player' => $player->data,
+                'field' => $field->data,
+            ]
+        ]);
+    }
+
+    public function handleMove(
+        Player $player,
+        int $x,
+        int $y,
+        int $target_x,
+        int $target_y,
+        MedTivaUnitBagData $units,
+    ): JsonResponse {
+        return response()->json([
+            'success' => false,
+            'reason' => 'Action not implemented',
+        ]);
+    }
+
+    public function handleBuild(
+        Player $player,
+        int $x,
+        int $y,
+        string $building,
+    ): JsonResponse {
+        return response()->json([
+            'success' => false,
+            'reason' => 'Action not implemented',
+        ]);
+    }
+
+    public function error(string $reason, array $details = [])
+    {
+        return response()->json([
+            'success' => false,
+            'reason' => $reason,
+            'details' => $details,
+        ]);
+    }
+    public function errorGameplay(string $reason, array $details = [])
+    {
+        return response()->json([
+            'success' => false,
+            'reason' => 'Unable to perform that action right now',
+            'details' => array_merge(['message' => $reason, $details]),
+        ]);
+    }
+
+    public function errorInvalidField(int $x, int $y): JsonResponse
+    {
+        return $this->error(
+            'Field is not a valid target or does not exist',
+            [
+                'x' => $x,
+                'y' => $y,
+            ]
+        );
+    }
+
+    public function errorInvalidUnitType(string $unit_type): JsonResponse
+    {
+        return $this->error(
+            'Unittype is not valid for this action or does not exist',
+            [
+                'unit_type' => $unit_type,
+            ]
+        );
+    }
+
+    public function errorInvalidArgument(string $message, $received): JsonResponse
+    {
+        return $this->error(
+            'Invalid argument: ' . $message,
+            [
+                'received' => $received,
+            ]
+        );
     }
 }

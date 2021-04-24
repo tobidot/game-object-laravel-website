@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Services\Games\MedTiva;
+namespace App\Services\Games\MedTiva\Types;
 
 use App\Services\Games\Utils\TypeHint;
 
-class MedTivaBuilding extends TypeHint
+class MedTivaUnit extends TypeHint
 {
+    public int $count;
     public int $level;
-    public int $ticks;
 
     public function __construct(array $input)
     {
+        $this->count = $input['count'] ?? 0;
         $this->level = $input['level'] ?? 0;
-        $this->ticks = $input['ticks'] ?? 0;
     }
 }

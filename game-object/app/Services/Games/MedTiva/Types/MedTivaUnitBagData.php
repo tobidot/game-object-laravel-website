@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Services\Games\MedTiva;
+namespace App\Services\Games\MedTiva\Types;
 
 use App\Services\Games\Utils\TypeHint;
 
-class MedTivaUnitBag extends TypeHint
+class MedTivaUnitBagData extends TypeHint
 {
     public MedTivaUnit $villager;
     public MedTivaUnit $footman;

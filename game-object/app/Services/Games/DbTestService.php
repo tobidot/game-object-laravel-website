@@ -8,6 +8,7 @@ use App\Models\GameVariable;
 use App\Models\MapField;
 use App\Models\Player;
 use App\Services\Games\GameService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\ParameterBag;
 
@@ -46,7 +47,7 @@ class DbTestService extends GameService
         );
     }
 
-    public function handle(Player $player, ParameterBag $parameters)
+    public function handle(Player $player, ParameterBag $parameters): JsonResponse
     {
         $action_type = $parameters->get('action');
         $action_data = $parameters->get('action_data');
@@ -60,7 +61,12 @@ class DbTestService extends GameService
         ]);
     }
 
-    public function handleScore(Player $player, array $action_data)
+    public function handleAction(Player $player, string $action_type, array $action_data): JsonResponse
+    {
+        return response()->json();
+    }
+
+    public function handleScore(Player $player, array $action_data): JsonResponse
     {
         $validator = Validator::make($action_data, [
             'player_id' => ['required', 'exists:players,id'],

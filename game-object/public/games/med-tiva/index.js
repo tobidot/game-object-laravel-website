@@ -2,6 +2,69 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./resources/ts/games/med-tiva/api/MedTivaServerApi.ts":
+/*!*************************************************************!*\
+  !*** ./resources/ts/games/med-tiva/api/MedTivaServerApi.ts ***!
+  \*************************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+
+
+var __extends = this && this.__extends || function () {
+  var _extendStatics = function extendStatics(d, b) {
+    _extendStatics = Object.setPrototypeOf || {
+      __proto__: []
+    } instanceof Array && function (d, b) {
+      d.__proto__ = b;
+    } || function (d, b) {
+      for (var p in b) {
+        if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
+      }
+    };
+
+    return _extendStatics(d, b);
+  };
+
+  return function (d, b) {
+    if (typeof b !== "function" && b !== null) throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+
+    _extendStatics(d, b);
+
+    function __() {
+      this.constructor = d;
+    }
+
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+  };
+}();
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.MedTivaServerApi = void 0;
+
+var GameServerApi_1 = __webpack_require__(/*! ../../utils/GameServerApi */ "./resources/ts/games/utils/GameServerApi.ts");
+
+var MedTivaServerApi =
+/** @class */
+function (_super) {
+  __extends(MedTivaServerApi, _super);
+
+  function MedTivaServerApi() {
+    return _super !== null && _super.apply(this, arguments) || this;
+  }
+
+  MedTivaServerApi.prototype.recruit = function (data) {
+    return this.action('recruit', data);
+  };
+
+  return MedTivaServerApi;
+}(GameServerApi_1.GameServerApi);
+
+exports.MedTivaServerApi = MedTivaServerApi;
+
+/***/ }),
+
 /***/ "./resources/ts/games/utils/GameServerApi.ts":
 /*!***************************************************!*\
   !*** ./resources/ts/games/utils/GameServerApi.ts ***!
@@ -314,10 +377,10 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 
-var GameServerApi_1 = __webpack_require__(/*! ../utils/GameServerApi */ "./resources/ts/games/utils/GameServerApi.ts");
+var MedTivaServerApi_1 = __webpack_require__(/*! ./api/MedTivaServerApi */ "./resources/ts/games/med-tiva/api/MedTivaServerApi.ts");
 
 console.log("initialize Med-Tiva");
-var api = new GameServerApi_1.GameServerApi();
+var api = new MedTivaServerApi_1.MedTivaServerApi();
 window.api = api;
 })();
 

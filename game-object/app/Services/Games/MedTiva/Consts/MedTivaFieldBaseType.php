@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Services\Games\MedTiva;
+namespace App\Services\Games\MedTiva\Consts;
 
-use App\Services\Games\Utils\TypeHint;
 
 class MedTivaFieldBaseType
 {

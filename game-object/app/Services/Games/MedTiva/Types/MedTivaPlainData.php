@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Games\MedTiva;
+namespace App\Services\Games\MedTiva\Types;
 
 use App\Services\Games\Utils\TypeHint;
 

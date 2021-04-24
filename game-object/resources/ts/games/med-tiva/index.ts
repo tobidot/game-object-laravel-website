@@ -1,13 +1,14 @@
 import { GameServerApi } from "../utils/GameServerApi";
+import { MedTivaServerApi } from "./api/MedTivaServerApi";
 
 console.log("initialize Med-Tiva");
 
 declare global {
     interface Window {
-        api: GameServerApi;
+        api: MedTivaServerApi;
     }
 }
 
-const api = new GameServerApi();
+const api = new MedTivaServerApi();
 window.api = api;
 

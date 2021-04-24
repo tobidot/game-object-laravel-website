@@ -61,6 +61,11 @@ class GameSession extends Model
         return $this->hasMany(MapField::class);
     }
 
+    public function mapFieldAt(int $x, int $y): ?MapField
+    {
+        return $this->mapFields()->where('x', $x)->where('y', $y)->first();
+    }
+
     public function gameVariables(): HasMany
     {
         return $this->hasMany(GameVariable::class);
@@ -76,12 +81,11 @@ class GameSession extends Model
         if ($this->gameService) return $this->gameService;
         $game_service_class = 'App\\Services\\Games\\' . Str::studly($this->game_type) . 'Service';
         try {
-            $game_service = App::make($game_service_class);
+            $game_service = resolve($game_service_class, ['gameSession' => $this]);
         } catch (Throwable $e) {
             $game_service = null;
         }
         if ($game_service === null) throw new GoInvalidGameTypeException($this->game_type, $game_service_class);
-        $game_service->gameSession = $this;
         return $this->gameService = $game_service;
     }
 }
