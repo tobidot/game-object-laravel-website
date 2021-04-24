@@ -6,15 +6,15 @@ use App\Services\Games\Utils\TypeHint;
 
 class MedTivaUnitBagData extends TypeHint
 {
-    public MedTivaUnit $villager;
-    public MedTivaUnit $footman;
-    public MedTivaUnit $goblin;
+    public MedTivaUnitData $villager;
+    public MedTivaUnitData $footman;
+    public MedTivaUnitData $goblin;
 
     public function __construct(array $input)
     {
-        $this->villager = new MedTivaUnit($input['villager'] ?? []);
-        $this->footman = new MedTivaUnit($input['footman'] ?? []);
-        $this->goblin = new MedTivaUnit($input['goblin'] ?? []);
+        $this->villager = new MedTivaUnitData($input['villager'] ?? []);
+        $this->footman = new MedTivaUnitData($input['footman'] ?? []);
+        $this->goblin = new MedTivaUnitData($input['goblin'] ?? []);
     }
 
     public function isEmpty(): bool

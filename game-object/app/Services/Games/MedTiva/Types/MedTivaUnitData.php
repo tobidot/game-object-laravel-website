@@ -4,7 +4,7 @@ namespace App\Services\Games\MedTiva\Types;
 
 use App\Services\Games\Utils\TypeHint;
 
-class MedTivaUnit extends TypeHint
+class MedTivaUnitData extends TypeHint
 {
     public int $count;
     public int $level;

@@ -4,14 +4,14 @@ namespace App\Services\Games\MedTiva\Types;
 
 use App\Services\Games\Utils\TypeHint;
 
-class MedTivaBuildingBag extends TypeHint
+class MedTivaBuildingBagData extends TypeHint
 {
-    public MedTivaBuilding $hut;
-    public MedTivaBuilding $training_camp;
+    public MedTivaBuildingData $hut;
+    public MedTivaBuildingData $training_camp;
 
     public function __construct(array $input)
     {
-        $this->hut = new MedTivaBuilding($input['hut'] ?? []);
-        $this->training_camp = new MedTivaBuilding($input['training_camp'] ?? []);
+        $this->hut = new MedTivaBuildingData($input['hut'] ?? []);
+        $this->training_camp = new MedTivaBuildingData($input['training_camp'] ?? []);
     }
 }
