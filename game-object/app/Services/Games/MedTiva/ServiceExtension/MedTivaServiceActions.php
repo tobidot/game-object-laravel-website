@@ -38,7 +38,7 @@ class MedTivaServiceActions
         int $amount,
     ): JsonResponse {
         if ($amount < 1) return $this->errors->InvalidArgument('Amount should be greater than 1', $amount);
-        if (property_exists(MedTivaUnitBag::class, $unit) === false) return $this->errors->invalidUnitType($unit);
+        if (array_key_exists($unit, MedTivaUnitType::$all) === false) return $this->errors->invalidUnitType($unit);
         $field = $this->gameSession->mapFieldAt($x, $y);
         if ($field === null) return $this->errors->invalidField($x, $y);
         if ($field->base_type !== MedTivaFieldBaseType::CITY) return $this->errors->invalidField($x, $y);
@@ -47,7 +47,7 @@ class MedTivaServiceActions
 
         /** @var MedTivaUnit $unit_data */
         $unit_data = $field_data->units->$unit;
-        $cost = MedTivaUnitType::FOOTMAN->getUnitCostAtLevel($unit_data->level) * $amount;
+        $cost = MedTivaUnitType::$footman->getUnitCostAtLevel($unit_data->level) * $amount;
         $player_data = new MedTivaPlayerData($player->data);
 
         if ($player_data->gold < $cost) {
@@ -88,6 +88,39 @@ class MedTivaServiceActions
         int $y,
         string $building,
     ): JsonResponse {
+
+        // if ($amount < 1) return $this->errors->InvalidArgument('Amount should be greater than 1', $amount);
+        // if (property_exists(MedTivaUnitBag::class, $unit) === false) return $this->errors->invalidUnitType($unit);
+        // $field = $this->gameSession->mapFieldAt($x, $y);
+        // if ($field === null) return $this->errors->invalidField($x, $y);
+        // if ($field->base_type !== MedTivaFieldBaseType::CITY) return $this->errors->invalidField($x, $y);
+        // $field_data = new MedTivaCityData($field->data);
+        // if ($field_data->player_id !== $player->id) return $this->errors->invalidField($x, $y);
+
+        // /** @var MedTivaUnit $unit_data */
+        // $unit_data = $field_data->units->$unit;
+        // $cost = MedTivaUnitType::FOOTMAN->getUnitCostAtLevel($unit_data->level) * $amount;
+        // $player_data = new MedTivaPlayerData($player->data);
+
+        // if ($player_data->gold < $cost) {
+        //     return $this->errors->error('Not Enough Gold');
+        // }
+
+        // $player_data->gold -= $cost;
+        // $unit_data->count += $amount;
+
+        // $field->data = $field_data->toArray();
+        // $player->data = $player_data->toArray();
+
+        // DB::beginTransaction();
+        // $field->save();
+        // $player->save();
+        // DB::commit();
+
+        // return $this->success([
+        //     'player' => $player->data,
+        //     'field' => $field->data,
+        // ]);
         return $this->errors->notImplemented();
     }
 

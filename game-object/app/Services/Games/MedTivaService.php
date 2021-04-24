@@ -48,7 +48,9 @@ class MedTivaService extends GameService
 
     public function newPlayer(Player $player, ParameterBag $parameters)
     {
-        $player->data = (new MedTivaPlayerData([]))->toArray();
+        $player->data = (new MedTivaPlayerData([
+            'gold' => 100,
+        ]))->toArray();
         $player->save();
         $field = $this->gameSession->mapFields()->getQuery()->where('base_type', MedTivaFieldBaseType::PLAIN)->inRandomOrder()->first();
         $field->base_type = MedTivaFieldBaseType::CITY;
