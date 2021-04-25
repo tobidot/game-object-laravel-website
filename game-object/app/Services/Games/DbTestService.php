@@ -14,11 +14,6 @@ use Symfony\Component\HttpFoundation\ParameterBag;
 
 class DbTestService extends GameService
 {
-
-    public function __construct()
-    {
-    }
-
     public function newGame(ParameterBag $parameters)
     {
         $field_types = ["low", "med", "high",];

@@ -8,7 +8,10 @@ class MedTivaUnitType
 {
     public static MedTivaUnitTypeData $footman;
 
-    public static $all;
+    /**
+     * @var MedTivaUnitTypeData[] $all
+     */
+    public static array $all;
 }
 
 MedTivaUnitType::$footman = new MedTivaUnitTypeData([

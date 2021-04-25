@@ -6,8 +6,6 @@ export interface MedTivaMe {
 export interface MedTivaField {
     x: number,
     y: number,
-    base_type: string,
+    base_type: number,
     data: any,
 }
-
-export class X { }

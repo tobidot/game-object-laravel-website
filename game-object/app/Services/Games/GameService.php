@@ -5,8 +5,11 @@ namespace App\Services\Games;
 use App\Models\GameSession;
 use App\Models\Player;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\ParameterBag;
+use Throwable;
 
 abstract class GameService
 {
@@ -34,14 +37,22 @@ abstract class GameService
 
     public function iregularUpdate()
     {
-        /** @var Carbon $last_update_step_at */
-        $last_update_step_at = $this->gameSession->last_update_step_at;
-        $now = now();
-        $steps = $last_update_step_at->diffInMinutes($now);
-        for ($i = 0; $i < $steps; $i++) {
-            $this->update();
+        try {
+            /** @var Carbon $last_update_step_at */
+            $last_update_step_at = $this->gameSession->last_update_step_at;
+            $now = now();
+            $steps = $last_update_step_at->diffInMinutes($now);
+            for ($i = 0; $i < $steps; $i++) {
+                $this->update();
+            }
+            $this->gameSession->last_update_step_at = $now;
+            $this->gameSession->save();
+        } catch (Throwable $exception) {
+            Log::error('Updateing game failed', [
+                'game_session_id' => $this->gameSession->id,
+                'game_type' => $this->gameSession->game_type,
+                'exception' => $exception,
+            ]);
         }
-        $this->gameSession->last_update_step_at = $now;
-        $this->gameSession->save();
     }
 }

@@ -8,10 +8,10 @@ use App\Models\MapField;
 use App\Models\Player;
 use App\Services\Games\GameService;
 use App\Services\Games\MedTiva\Consts\MedTivaFieldBaseType;
-use App\Services\Games\MedTiva\MedTivaUpdateBuffer;
 use App\Services\Games\MedTiva\ServiceExtension\MedTivaServiceActions;
 use App\Services\Games\MedTiva\ServiceExtension\MedTivaServiceErrors;
 use App\Services\Games\MedTiva\ServiceExtension\MedTivaServiceUpdates;
+use App\Services\Games\MedTiva\ServiceExtension\MedTivaUpdateBuffer;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use App\Services\Games\MedTiva\types\MedTivaCaveData;
 use App\Services\Games\MedTiva\Types\MedTivaCityData;
@@ -91,6 +91,9 @@ class MedTivaService extends GameService
         $update_buffer = new MedTivaUpdateBuffer($this->gameSession);
         $update_buffer->fields->each(function (MapField $field) use ($update_buffer) {
             $this->updates->updateField($field, $update_buffer);
+        });
+        $update_buffer->players->each(function (Player $player) use ($update_buffer) {
+            $this->updates->updatePlayer($player, $update_buffer);
         });
         $update_buffer->players->each(function (Player $player) {
             $player->save();

@@ -2,6 +2,8 @@
 
 namespace App\Services\Games\MedTiva\ServiceExtension;
 
+use App\Services\Games\MedTiva\Consts\MedTivaBuildingType;
+use App\Services\Games\MedTiva\Consts\MedTivaUnitType;
 use Illuminate\Http\JsonResponse;
 
 class MedTivaServiceErrors
@@ -47,9 +49,21 @@ class MedTivaServiceErrors
     public function invalidUnitType(string $unit_type): JsonResponse
     {
         return $this->error(
-            'Unittype is not valid for this action or does not exist',
+            'Unit type is not valid for this action or does not exist',
             [
                 'unit_type' => $unit_type,
+                'all_types' => array_keys(MedTivaUnitType::$all)
+            ]
+        );
+    }
+
+    public function invalidBuildingType(string $building_type): JsonResponse
+    {
+        return $this->error(
+            'Building type is not valid for this action or does not exist',
+            [
+                'building_type' => $building_type,
+                'all_types' => array_keys(MedTivaBuildingType::$all)
             ]
         );
     }

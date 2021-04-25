@@ -79,9 +79,13 @@ class GameSession extends Model
     public function getGameService(): GameService
     {
         if ($this->gameService) return $this->gameService;
-        $game_service_class = 'App\\Services\\Games\\' . Str::studly($this->game_type) . 'Service';
+        $game_service_class = '\\App\\Services\\Games\\' . Str::studly($this->game_type) . 'Service';
         try {
             $game_service = resolve($game_service_class, ['gameSession' => $this]);
+            if ($game_service->gameSession !== $this) {
+                $game_service->gameSession = $this;
+                $game_service->iregularUpdate();
+            }
         } catch (Throwable $e) {
             $game_service = null;
         }

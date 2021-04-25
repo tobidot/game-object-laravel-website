@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Games\MedTiva;
+namespace App\Services\Games\MedTiva\ServiceExtension;
 
 use App\Models\GameSession;
 use Illuminate\Database\Eloquent\Collection;
