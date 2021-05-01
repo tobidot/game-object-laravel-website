@@ -1,0 +1,36 @@
+@mixin rounded($radius: 5px) {
+    border-radius: $radius;
+}
+
+@mixin border($width: 3px) {
+    border-style: solid;
+    border-width: $width;
+    border-color: var(--theme-color-border);
+}
+
+@mixin aftershadow($width: 4px, $transition-speed: 0.25s) {
+    position: relative;
+    box-shadow: 0 0 $width 1px black;
+
+    &:after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        display: block;
+        width: 100%;
+        height: 100%;
+
+        box-shadow: 0 0 ($width*2) 1px black;
+        opacity: 0;
+        transition: opacity $transition-speed linear;
+        @content;
+    }
+
+    &:hover {
+        &:after {
+            opacity: 1;
+        }
+    }
+}

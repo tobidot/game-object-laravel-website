@@ -1,0 +1,14 @@
+* {
+    user-select: none;
+    box-sizing: border-box;
+
+    &:focus,
+    &:focus-visible {
+        outline: none;
+    }
+}
+
+
+.u-hidden {
+    display: none !important;
+}

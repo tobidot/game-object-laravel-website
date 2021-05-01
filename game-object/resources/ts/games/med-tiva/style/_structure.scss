@@ -1,0 +1,7 @@
+.app {
+    display: grid;
+    grid-template:
+        "map  map  menu"
+        "map  map  menu"
+        "info info menu";
+}

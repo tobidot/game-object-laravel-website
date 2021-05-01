@@ -1,0 +1,31 @@
+.map {
+    display: grid;
+    width: 400px;
+    height: 400px;
+
+    background-color: black;
+
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+}
+
+.field {
+    border: 1px solid black;
+
+    &-type {
+
+        &--plane {
+            background: repeating-linear-gradient(45deg, #00ff00 0px, #008800 10px, #00ff00 20px);
+        }
+
+        &--cave {
+            background: radial-gradient(#000000 0, #777777 10px, #111111 33%);
+        }
+
+        &--city {
+            background: repeating-linear-gradient(0deg, transparent 0px, transparent 20px, #aaaaaa 20px, #aaaaaa 40px),
+                repeating-linear-gradient(90deg, transparent 0px, transparent 20px, #aaaaaa 20px, #aaaaaa 40px);
+        }
+    }
+
+}
