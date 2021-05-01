@@ -14,6 +14,7 @@ const mix = require('laravel-mix');
 mix.js('resources/js/app.js', 'public/js')
     .ts('resources/ts/games/med-tiva/index.ts', 'public/games/med-tiva')
     .sourceMaps()
+    .sass('resources/ts/games/med-tiva/style.scss', 'public/games/med-tiva')
     .copy('resources/ts/games/med-tiva/index.html', 'public/games/med-tiva')
     .postCss('resources/css/app.css', 'public/css', [
         require('postcss-import'),
