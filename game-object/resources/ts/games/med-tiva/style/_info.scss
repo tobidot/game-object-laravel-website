@@ -1,0 +1,33 @@
+.info {
+    display: grid;
+
+    grid-template-areas:
+        "image info";
+    grid-template-columns: auto 1fr;
+
+    &__image {
+        @include border();
+
+        grid-area: "image";
+        display: block;
+        width: 250px;
+        height: 100%;
+
+        margin: auto;
+
+        background: var(--theme-color);
+    }
+
+    &__data {
+        @include border();
+
+        grid-area: "data";
+        display: flex;
+        width: 100%;
+        height: 100%;
+
+        flex-direction: column;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+}

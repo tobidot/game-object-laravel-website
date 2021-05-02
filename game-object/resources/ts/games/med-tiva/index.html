@@ -11,31 +11,49 @@
 </head>
 
 <body>
-    <div id="app">
+    <div id="app" class="app">
         <div id="map" class="map">
 
         </div>
         <div class="info">
+            <div class="info__image">
+                <img src="">
+                </img>
+            </div>
+            <div class="info__data">
 
+            </div>
         </div>
         <div class="menu">
-
+            <div class="menu__title">
+                <h1>
+                    Med-Tiva
+                </h1>
+            </div>
+            <div class="menu__item">
+                Hello
+            </div>
+            <div class="menu__seperator">
+            </div>
+            <div class="menu__item">
+                Mini map
+            </div>
         </div>
         <div class="settings js-hidden">
-            <div class="settings--menu">
-                <div class="settings--close">
-                    <button class="settings--close__button">
+            <div class="settings__menu">
+                <div class="settings__close">
+                    <button class="settings__close-button">
                         <svg viewbox="0 0 100 100">
-                            <path class="settings--close__x" d="M 30 30,L 70 70,M 30 70,L 70 30"></path>
-                            <path class="settings--close__x-hover" d="M 30 30,L 70 70,M 30 70,L 70 30"></path>
+                            <path class="settings__close-x" d="M 30 30,L 70 70,M 30 70,L 70 30"></path>
+                            <path class="settings__close-x--hover" d="M 30 30,L 70 70,M 30 70,L 70 30"></path>
                         </svg>
                     </button>
                 </div>
-                <button class="settings--button">
-                    Hello
+                <button class="settings__button" data-trigger="reload">
+                    Reload Application
                 </button>
-                <button class="settings--button">
-                    Hello
+                <button class="settings__button" data-trigger="back-to-lobby">
+                    Back to Lobby
                 </button>
             </div>
         </div>

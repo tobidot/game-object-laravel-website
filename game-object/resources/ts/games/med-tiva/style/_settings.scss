@@ -11,13 +11,16 @@
     align-items: center;
 
     opacity: 1;
-    transition: opacity 0.5s ease-out;
+    visibility: visible;
+    transition: visibility 0s 0s, opacity $transision-speed 0s ease-out;
 
     &.js-hidden {
+        visibility: hidden;
         opacity: 0;
+        transition: visibility 0s $transision-speed, opacity $transision-speed 0s ease-out;
     }
 
-    &--menu {
+    &__menu {
         @include rounded(10px);
         @include border();
         position: relative;
@@ -27,19 +30,19 @@
         padding: 8px 16px;
         margin: auto;
 
-        box-shadow: 5px 5px 4px #888888;
+        box-shadow: 5px 5px 4px #00000088;
         flex-direction: column;
 
         background-color: var(--theme-color-bg);
     }
 
-    &--button {
+    &__button {
         @include button();
         font-size: 1.5rem;
         margin: 8px 16px 8px 16px;
     }
 
-    &--close {
+    &__close {
         position: absolute;
         top: 0;
         right: 0;
@@ -48,7 +51,7 @@
         width: 2rem;
         height: 2rem;
 
-        &__button {
+        &-button {
             @include border();
 
             @include aftershadow(4px, $transision-speed) {
@@ -77,24 +80,22 @@
             transition: border-width $transision-speed linear;
         }
 
-        &__x {
-            stroke: black;
-            stroke-width: 4px;
+        &:hover {
+            .settings__close-x-hover {
+                opacity: 1;
+            }
         }
+    }
 
-        &__x-hover {
+    &__close-x {
+        stroke: black;
+        stroke-width: 4px;
+
+        &--hover {
             stroke: black;
             stroke-width: 12px;
             opacity: 0;
             transition: opacity $transision-speed linear;
-        }
-
-        &:hover {
-            .settings--close {
-                &__x-hover {
-                    opacity: 1;
-                }
-            }
         }
     }
 }

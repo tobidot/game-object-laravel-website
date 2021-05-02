@@ -1,0 +1,27 @@
+.menu {
+    display: flex;
+    flex-direction: column;
+
+    justify-content: flex-start;
+
+    &__seperator {
+        margin-top: auto;
+    }
+
+    &__item {
+        margin: 8px 16px;
+    }
+
+    &__title {
+        width: auto;
+        border: 5px solid var(--theme-color-border);
+
+        font-size: 1.5rem;
+        background: var(--theme-color);
+        text-align: center;
+
+        >h1 {
+            margin: 0;
+        }
+    }
+}

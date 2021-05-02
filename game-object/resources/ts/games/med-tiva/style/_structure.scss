@@ -1,7 +1,27 @@
 .app {
     display: grid;
+    width: 100vw;
+    height: 100vh;
+    padding: 8px;
+
+
+    background: var(--theme-color-bg);
+    overflow: hidden;
+
     grid-template:
         "map  map  menu"
         "map  map  menu"
         "info info menu";
+    grid-template-columns: 1fr 1fr 300px;
+    grid-template-rows: 1fr 1fr 250px;
+}
+
+.info {
+    grid-area: info;
+    border-top: 5px solid var(--theme-color-border);
+}
+
+.menu {
+    grid-area: menu;
+    border-left: 5px solid var(--theme-color-border);
 }

@@ -9,12 +9,16 @@
   outline: none;
 }
 
+body {
+  margin: 0;
+}
+
 .u-hidden {
   display: none !important;
 }
 
 :root {
-  --theme-color: #4444bb;
+  --theme-color: #884444;
   --theme-color-border: #444444;
   --theme-color-bg: #aa5500;
   --theme-color-action: #cc2222;
@@ -22,16 +26,36 @@
 
 .app {
   display: grid;
+  width: 100vw;
+  height: 100vh;
+  padding: 8px;
+  background: var(--theme-color-bg);
+  overflow: hidden;
   grid-template: "map  map  menu" "map  map  menu" "info info menu";
+  grid-template-columns: 1fr 1fr 300px;
+  grid-template-rows: 1fr 1fr 250px;
+}
+
+.info {
+  grid-area: info;
+  border-top: 5px solid var(--theme-color-border);
+}
+
+.menu {
+  grid-area: menu;
+  border-left: 5px solid var(--theme-color-border);
 }
 
 .map {
+  grid-area: map;
   display: grid;
-  width: 400px;
-  height: 400px;
+  width: 100%;
+  height: 100%;
   background-color: black;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+  --map-width: 5;
+  --map-height: 5;
+  grid-template-columns: repeat(var(--map-width), 1fr);
+  grid-template-rows: repeat(var(--map-height), 1fr);
 }
 
 .field {
@@ -57,12 +81,15 @@
   justify-content: center;
   align-items: center;
   opacity: 1;
-  transition: opacity 0.5s ease-out;
+  visibility: visible;
+  transition: visibility 0s 0s, opacity 0.25s 0s ease-out;
 }
 .settings.js-hidden {
+  visibility: hidden;
   opacity: 0;
+  transition: visibility 0s 0.25s, opacity 0.25s 0s ease-out;
 }
-.settings--menu {
+.settings__menu {
   border-radius: 10px;
   border-style: solid;
   border-width: 3px;
@@ -73,11 +100,11 @@
   min-width: 250px;
   padding: 8px 16px;
   margin: auto;
-  box-shadow: 5px 5px 4px #888888;
+  box-shadow: 5px 5px 4px #00000088;
   flex-direction: column;
   background-color: var(--theme-color-bg);
 }
-.settings--button {
+.settings__button {
   border-radius: 5px;
   border-style: solid;
   border-width: 3px;
@@ -93,7 +120,7 @@
   font-size: 1.5rem;
   margin: 8px 16px 8px 16px;
 }
-.settings--button:after {
+.settings__button:after {
   border-radius: 5px;
   content: "";
   position: absolute;
@@ -107,14 +134,14 @@
   opacity: 0;
   transition: opacity 0.25s linear;
 }
-.settings--button:hover {
+.settings__button:hover {
   z-index: 1;
   transform: translate(-2px, -2px);
 }
-.settings--button:hover:after {
+.settings__button:hover:after {
   opacity: 1;
 }
-.settings--close {
+.settings__close {
   position: absolute;
   top: 0;
   right: 0;
@@ -122,7 +149,7 @@
   width: 2rem;
   height: 2rem;
 }
-.settings--close__button {
+.settings__close-button {
   border-style: solid;
   border-width: 3px;
   border-color: var(--theme-color-border);
@@ -143,7 +170,7 @@
   transform: translate(50%, -50%);
   transition: border-width 0.25s linear;
 }
-.settings--close__button:after {
+.settings__close-button:after {
   content: "";
   position: absolute;
   top: 0;
@@ -161,19 +188,70 @@
   left: -3px;
   border-radius: 100%;
 }
-.settings--close__button:hover:after {
+.settings__close-button:hover:after {
   opacity: 1;
 }
-.settings--close__x {
+.settings__close:hover .settings__close-x-hover {
+  opacity: 1;
+}
+.settings__close-x {
   stroke: black;
   stroke-width: 4px;
 }
-.settings--close__x-hover {
+.settings__close-x--hover {
   stroke: black;
   stroke-width: 12px;
   opacity: 0;
   transition: opacity 0.25s linear;
 }
-.settings--close:hover .settings--close__x-hover {
-  opacity: 1;
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+.menu__seperator {
+  margin-top: auto;
+}
+.menu__item {
+  margin: 8px 16px;
+}
+.menu__title {
+  width: auto;
+  border: 5px solid var(--theme-color-border);
+  font-size: 1.5rem;
+  background: var(--theme-color);
+  text-align: center;
+}
+.menu__title > h1 {
+  margin: 0;
+}
+
+.info {
+  display: grid;
+  grid-template-areas: "image info";
+  grid-template-columns: auto 1fr;
+}
+.info__image {
+  border-style: solid;
+  border-width: 3px;
+  border-color: var(--theme-color-border);
+  grid-area: "image";
+  display: block;
+  width: 250px;
+  height: 100%;
+  margin: auto;
+  background: var(--theme-color);
+}
+.info__data {
+  border-style: solid;
+  border-width: 3px;
+  border-color: var(--theme-color-border);
+  grid-area: "data";
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  overflow-x: hidden;
+  overflow-y: auto;
 }

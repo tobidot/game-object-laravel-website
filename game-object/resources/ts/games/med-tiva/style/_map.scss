@@ -1,12 +1,15 @@
 .map {
+    grid-area: map;
     display: grid;
-    width: 400px;
-    height: 400px;
+    width: 100%;
+    height: 100%;
 
     background-color: black;
 
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+    --map-width: 5;
+    --map-height: 5;
+    grid-template-columns: repeat(var(--map-width), 1fr);
+    grid-template-rows: repeat(var(--map-height), 1fr);
 }
 
 .field {
