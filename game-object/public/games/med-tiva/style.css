@@ -24,6 +24,11 @@ body {
   --theme-color-action: #cc2222;
 }
 
+.map-control {
+  display: flex;
+  flex-direction: column;
+}
+
 .app {
   display: grid;
   width: 100vw;
@@ -52,6 +57,7 @@ body {
   width: 100%;
   height: 100%;
   background-color: black;
+  overflow: hidden;
   --map-width: 5;
   --map-height: 5;
   grid-template-columns: repeat(var(--map-width), 1fr);
@@ -70,7 +76,38 @@ body {
 .field-type--city {
   background: repeating-linear-gradient(0deg, transparent 0px, transparent 20px, #aaaaaa 20px, #aaaaaa 40px), repeating-linear-gradient(90deg, transparent 0px, transparent 20px, #aaaaaa 20px, #aaaaaa 40px);
 }
+.field-type--loading {
+  width: 80%;
+  height: 80%;
+  border: none;
+  border-radius: 100%;
+  margin: auto;
+  background: radial-gradient(transparent 8%, #888888 10%, #888888 20%, transparent 22%), linear-gradient(0deg, black 45%, transparent 55%), linear-gradient(50deg, black 45%, transparent 55%);
+  background-blend-mode: multiply;
+  -webkit-animation: rotate 2s linear infinite;
+          animation: rotate 2s linear infinite;
+}
+.field-type--none {
+  background: repeating-linear-gradient(0deg, transparent 0px, transparent 20px, #aaaaaa 20px, #aaaaaa 40px), repeating-linear-gradient(90deg, transparent 0px, transparent 20px, #aaaaaa 20px, #aaaaaa 40px);
+}
 
+@-webkit-keyframes rotate {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 .settings {
   position: absolute;
   left: 0;

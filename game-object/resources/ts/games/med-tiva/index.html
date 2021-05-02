@@ -36,27 +36,37 @@
             <div class="menu__seperator">
             </div>
             <div class="menu__item">
-                Mini map
+                <form id="map-control" class="menu__map-control map-control">
+                    <label>
+                        Map-Center-X:
+                        <input id="map-control__center-x" name="center-x" value="2">
+                    </label>
+                    <label>
+                        Map-Center-Y:
+                        <input id="map-control__center-y" name="center-x" value="2">
+                    </label>
+                </form>
             </div>
         </div>
-        <div class="settings js-hidden">
-            <div class="settings__menu">
-                <div class="settings__close">
-                    <button class="settings__close-button">
-                        <svg viewbox="0 0 100 100">
-                            <path class="settings__close-x" d="M 30 30,L 70 70,M 30 70,L 70 30"></path>
-                            <path class="settings__close-x--hover" d="M 30 30,L 70 70,M 30 70,L 70 30"></path>
-                        </svg>
-                    </button>
-                </div>
-                <button class="settings__button" data-trigger="reload">
-                    Reload Application
-                </button>
-                <button class="settings__button" data-trigger="back-to-lobby">
-                    Back to Lobby
+    </div>
+    <div class="settings js-hidden">
+        <div class="settings__menu">
+            <div class="settings__close">
+                <button class="settings__close-button">
+                    <svg viewbox="0 0 100 100">
+                        <path class="settings__close-x" d="M 30 30,L 70 70,M 30 70,L 70 30"></path>
+                        <path class="settings__close-x--hover" d="M 30 30,L 70 70,M 30 70,L 70 30"></path>
+                    </svg>
                 </button>
             </div>
+            <button class="settings__button" data-trigger="reload">
+                Reload Application
+            </button>
+            <button class="settings__button" data-trigger="back-to-lobby">
+                Back to Lobby
+            </button>
         </div>
+    </div>
     </div>
 </body>
 
