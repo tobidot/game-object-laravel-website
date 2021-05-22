@@ -24,7 +24,15 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-
+      - name: Poke Around
+        run: |
+          pwd
+          ls
+          echo "$GITHUB_WORKSPACE"
+          echo ${{env.GITHUB_WORKSPACE}}
+          cd ./game-object
+          ls
+          
       - name: Composer Install
         uses: MilesChou/composer-action@master
         with:
