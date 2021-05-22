@@ -33,12 +33,12 @@ jobs:
           ls
           
       - name: Composer Install
-        uses: MilesChou/composer-action@master
+        uses: MilesChou/composer-action@8.0
         with:
           args: install --working-dir=./game-object
           
       - name: Composer Dump
-        uses: MilesChou/composer-action@master
+        uses: MilesChou/composer-action@8.0
         with:
           args: dump-autoload --working-dir=./game-object
 
