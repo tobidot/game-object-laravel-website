@@ -13,7 +13,7 @@ use App\Services\Games\MedTiva\ServiceExtension\MedTivaServiceErrors;
 use App\Services\Games\MedTiva\ServiceExtension\MedTivaServiceUpdates;
 use App\Services\Games\MedTiva\ServiceExtension\MedTivaUpdateBuffer;
 use Symfony\Component\HttpFoundation\ParameterBag;
-use App\Services\Games\MedTiva\types\MedTivaCaveData;
+use App\Services\Games\MedTiva\Types\MedTivaCaveData;
 use App\Services\Games\MedTiva\Types\MedTivaCityData;
 use App\Services\Games\MedTiva\Types\MedTivaPlainData;
 use App\Services\Games\MedTiva\Types\MedTivaPlayerData;
