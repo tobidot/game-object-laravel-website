@@ -16,6 +16,7 @@ mix.js('resources/js/app.js', 'public/js')
     .sourceMaps()
     .sass('resources/ts/games/med-tiva/style.scss', 'public/games/med-tiva')
     .copy('resources/ts/games/med-tiva/index.html', 'public/games/med-tiva')
+    .copy('resources/ts/games/med-tiva/images', 'public/games/med-tiva/images')
     .postCss('resources/css/app.css', 'public/css', [
         require('postcss-import'),
         require('tailwindcss'),

@@ -3,5 +3,7 @@
     "/games/med-tiva/index.js": "/games/med-tiva/index.js",
     "/css/app.css": "/css/app.css",
     "/games/med-tiva/style.css": "/games/med-tiva/style.css",
-    "/games/med-tiva/index.html": "/games/med-tiva/index.html"
+    "/games/med-tiva/index.html": "/games/med-tiva/index.html",
+    "/games/med-tiva/images/cavern.svg": "/games/med-tiva/images/cavern.svg",
+    "/games/med-tiva/images/city.svg": "/games/med-tiva/images/city.svg"
 }
