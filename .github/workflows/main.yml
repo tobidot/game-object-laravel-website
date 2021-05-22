@@ -28,12 +28,12 @@ jobs:
       - name: Composer Install
         uses: MilesChou/composer-action@master
         with:
-          args: install --working-dir=$GITHUB_WORKSPACE/game-object
+          args: install --working-dir=${{ env.GITHUB_WORKSPACE }}/game-object
           
       - name: Composer Dump
         uses: MilesChou/composer-action@master
         with:
-          args: dump-autoload --working-dir=$GITHUB_WORKSPACE/game-object
+          args: dump-autoload --working-dir=${{ env.GITHUB_WORKSPACE }}/game-object
 
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
