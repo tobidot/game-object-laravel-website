@@ -49,15 +49,6 @@ class SettingsListeners {
     ) {
         document.addEventListener('keydown', this.on_keypress);
         this.parent.elements.close_button.addEventListener('click', this.on_close_button_click);
-        this.parent.elements.settings_element.addEventListener('click', this.on_button_click);
-    }
-
-    protected on_button_click = (event: MouseEvent) => {
-        const target = event.target;
-        if (!(target instanceof HTMLButtonElement)) return;
-        const trigger = target.getAttribute('data-trigger');
-        if (!trigger) return;
-        window.app.event_delegator.settings.on_button_click(trigger);
     }
 
     protected on_close_button_click = () => {

@@ -88,6 +88,7 @@ body {
   border: none;
   border-radius: 100%;
   margin: auto;
+  cursor: progress;
   background: radial-gradient(transparent 8%, #888888 10%, #888888 20%, transparent 22%), linear-gradient(0deg, black 45%, transparent 55%), linear-gradient(50deg, black 45%, transparent 55%);
   background-blend-mode: multiply;
   -webkit-animation: rotate 2s linear infinite;
@@ -285,6 +286,11 @@ body {
   height: 100%;
   margin: auto;
   background: var(--theme-color);
+}
+.info__image img {
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(320deg, #075a07, #2d962d);
 }
 .info__data {
   border-style: solid;
