@@ -154,12 +154,15 @@ class MedTivaMapView {
             const field_position = this.parent.logic.get_field_position_for_input_position(field_input_x, field_input_y);
             const field_key = field_position.join(',');
             let field = this.parent.properties.fields.get(field_key);
-            if (!field) continue;
-            this.redraw_field(element, field);
+            this.redraw_field(element, field ?? false);
         }
     }
 
-    public redraw_field(field_el: HTMLElement, field: MedTivaField) {
+    public redraw_field(field_el: HTMLElement, field: MedTivaField | false) {
+        if (field === false) {
+            field_el.className = "field field-type--plane";
+            return;
+        }
         const field_types = ["plane", "cave", "city"];
         field_el.className = "field field-type--" + field_types[field.base_type];
     }
