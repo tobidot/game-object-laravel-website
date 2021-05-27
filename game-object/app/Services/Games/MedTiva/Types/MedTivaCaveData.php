@@ -13,7 +13,7 @@ class MedTivaCaveData  extends TypeHint
     public function __construct(array $input)
     {
         $this->danger_level = $input['danger_level'] ?? random_int(0, 9);
-        $this->ticks_until_spawn = $input['danger_level'] ?? 0;
+        $this->ticks_until_spawn = $input['ticks_until_spawn'] ?? 0;
         $this->monsters = new MedTivaUnitBagData($input['monsters'] ?? []);
     }
 }

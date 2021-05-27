@@ -17,6 +17,6 @@ class MedTivaFieldBaseType
 
     public static function toNumber(string $value): int
     {
-        return strpos(self::ALL, $value);
+        return array_search($value, self::ALL);
     }
 }

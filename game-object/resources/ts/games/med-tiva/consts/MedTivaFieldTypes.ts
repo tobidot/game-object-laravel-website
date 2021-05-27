@@ -1,4 +1,4 @@
-import { MedTivaApp } from "./MedTivaApp";
+import { MedTivaApp } from "../components/MedTivaApp";
 
 interface MedTivaFieldTypeStaticData {
     id: string;
@@ -7,36 +7,37 @@ interface MedTivaFieldTypeStaticData {
 }
 
 export class MedTivaFieldTypeHelper {
-    public readonly ALL = [
+    public static readonly ALL = [
         {
             id: "plane",
             name: "Plane",
             image_url: "/games/med-tiva/images/plane.svg",
         },
         {
-            id: "cavern",
-            name: "Cavern",
-            image_url: "/games/med-tiva/images/cavern.svg",
-        },
-        {
             id: "city",
             name: "City",
             image_url: "/games/med-tiva/images/city.svg",
         },
+        {
+            id: "cavern",
+            name: "Cavern",
+            image_url: "/games/med-tiva/images/cavern.svg",
+        },
     ];
-    public readonly ALL_NAMED;
+
+    public static readonly ALL_NAMED = new Map<string, MedTivaFieldTypeStaticData>(
+        MedTivaFieldTypeHelper.ALL.map((data) => {
+            return [
+                data.id,
+                data
+            ]
+        })
+    );
 
     public constructor(
         public app: MedTivaApp
     ) {
-        this.ALL_NAMED = new Map<string, MedTivaFieldTypeStaticData>(
-            this.ALL.map((data) => {
-                return [
-                    data.id,
-                    data
-                ]
-            })
-        );
+
 
     }
 }

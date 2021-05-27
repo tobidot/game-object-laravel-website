@@ -1,4 +1,5 @@
 import { MedTivaField } from "../api/MedTivaApiStructs";
+import { MedTivaFieldTypeHelper } from "../consts/MedTivaFieldTypes";
 import { SelectFieldEvent } from "../events/SelectFieldEvent";
 import { MedTivaFieldPosition } from "../structs/MedTivaFieldExtensions";
 import { get_element_by_selector_or_fail } from "../utils/dom-helpers";
@@ -235,7 +236,7 @@ class MedTivaMapView {
             field_el.className = "field field-type--loading";
             return;
         }
-        const field_types = ["plane", "cave", "city"];
-        field_el.className = "field field-type--" + field_types[field.base_type];
+        const field_type_id = MedTivaFieldTypeHelper.ALL[field.base_type].id;
+        field_el.className = "field field-type--" + field_type_id;
     }
 }

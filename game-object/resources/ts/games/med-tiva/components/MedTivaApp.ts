@@ -3,7 +3,7 @@ import { EventSocket } from "../events/EventSocket";
 import { get_element_by_selector_or_fail } from "../utils/dom-helpers";
 import { HtmlEventDelegator } from "./HtmlEventDelegator";
 import { MedTivaDetailsBox } from "./MedTivaDetailsBox";
-import { MedTivaFieldTypeHelper } from "./MedTivaFieldTypeHelper";
+import { MedTivaFieldTypeHelper } from "../consts/MedTivaFieldTypes";
 import { MedTivaMap } from "./MedTivaMap";
 import { Settings } from "./Settings";
 

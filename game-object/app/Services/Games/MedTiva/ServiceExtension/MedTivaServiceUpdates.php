@@ -195,7 +195,6 @@ class MedTivaServiceUpdates
         switch ($field->base_type) {
             case MedTivaFieldBaseType::CAVE:
                 $data = $this->updateFieldCave($field, $update_buffer);
-                $field->data = $data;
                 break;
             case MedTivaFieldBaseType::CITY:
                 $data = $this->updateFieldCity($field, $update_buffer);

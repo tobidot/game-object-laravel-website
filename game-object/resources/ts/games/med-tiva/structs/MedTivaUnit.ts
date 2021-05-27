@@ -1,4 +1,4 @@
 export interface MedTivaUnit {
     level: number;
-    amount: number;
+    count: number;
 }

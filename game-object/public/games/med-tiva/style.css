@@ -76,7 +76,7 @@ body {
 .field-type--plane {
   background: linear-gradient(320deg, #075a07, #2d962d);
 }
-.field-type--cave {
+.field-type--cavern {
   background-image: url(/images/cavern.svg?0c8e11974780a14ffbcf04822a2c6fdd), linear-gradient(320deg, #075a07, #2d962d);
 }
 .field-type--city {
