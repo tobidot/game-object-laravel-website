@@ -26,3 +26,13 @@
     }
 
 }
+
+#recruit-units {
+    display: none;
+    flex-direction: column;
+
+    &.js-active {
+        display: flex;
+    }
+
+}

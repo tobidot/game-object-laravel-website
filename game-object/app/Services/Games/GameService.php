@@ -3,9 +3,11 @@
 namespace App\Services\Games;
 
 use App\Models\GameSession;
+use App\Models\MapField;
 use App\Models\Player;
 use Carbon\Carbon;
 use Exception;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\ParameterBag;
@@ -23,6 +25,11 @@ abstract class GameService
     public abstract function newGame(ParameterBag $parameters);
 
     public abstract function newPlayer(Player $player, ParameterBag $parameters);
+
+    public function getFieldsHook(MapField $field): array
+    {
+        return [$field];
+    }
 
     public function handle(Player $player, ParameterBag $parameters): JsonResponse
     {

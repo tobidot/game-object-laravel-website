@@ -200,9 +200,11 @@ class GameSessionController extends Controller
             }
         });
 
+        $data = $query->get()->flatMap([$gameSession->getGameService(), 'getFieldsHook']);
+
         return response()->json([
             'success' => true,
-            'data' => $query->get()->all()
+            'data' => $data,
         ]);
     }
 

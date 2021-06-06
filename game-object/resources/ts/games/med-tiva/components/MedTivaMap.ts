@@ -1,4 +1,4 @@
-import { MedTivaField } from "../api/MedTivaApiStructs";
+import { is_city, is_not_hidden, MedTivaField } from "../api/MedTivaApiStructs";
 import { MedTivaFieldTypeHelper } from "../consts/MedTivaFieldTypes";
 import { SelectFieldEvent } from "../events/SelectFieldEvent";
 import { MedTivaFieldPosition } from "../structs/MedTivaFieldExtensions";
@@ -34,12 +34,18 @@ export class MedTivaMap {
         });
     }
 
+
+    public update_field(field: MedTivaField) {
+        this.properties.fields.set(this.logic.get_field_key(field), field);
+    }
+
     public async refresh(): Promise<this> {
         return this.logic.refresh().then(() => {
             this.view.redraw();
             return this;
         });
     }
+
 
 }
 
@@ -238,5 +244,10 @@ class MedTivaMapView {
         }
         const field_type_id = MedTivaFieldTypeHelper.ALL[field.base_type].id;
         field_el.className = "field field-type--" + field_type_id;
+        if (is_city(field) && is_not_hidden(field)) {
+            if (field.data.player_id === this.parent.app.globals.player.id) {
+                field_el.classList.add('is-owned-by-me');
+            }
+        }
     }
 }

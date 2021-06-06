@@ -1,0 +1,31 @@
+.info {
+    &__data {
+        padding: 1em;
+    }
+
+    table {
+        td {
+            border: 1px solid black;
+
+        }
+    }
+
+    h1,
+    h2,
+    h3 {
+        line-height: 1.25em;
+        margin: 0;
+    }
+
+    p {
+        margin: 0.25em 0;
+    }
+
+    .bold {
+        font-weight: bold;
+    }
+
+    .center {
+        text-align: center;
+    }
+}

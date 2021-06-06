@@ -12,6 +12,10 @@
     --map-height: 5;
     grid-template-columns: repeat(var(--map-width), 1fr);
     grid-template-rows: repeat(var(--map-height), 1fr);
+
+    * {
+        user-select: none;
+    }
 }
 
 .field {
@@ -35,7 +39,11 @@
 
         &--city {
             background-image: url("../images/city.svg"), radial-gradient(#374237 50%, #2d962d);
+
             // radial-gradient(#445744 50%, transparent);
+            &.is-owned-by-me {
+                background-image: url("../images/city.svg"), radial-gradient(#3a96ff 50%, #2d962d);
+            }
         }
 
         &--loading {

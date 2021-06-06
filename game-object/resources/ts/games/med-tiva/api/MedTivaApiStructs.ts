@@ -3,8 +3,12 @@ import { MedTivaFieldPosition } from "../structs/MedTivaFieldExtensions";
 import { MedTivaUnitBag } from "../structs/MedTivaUnitBag";
 
 export interface MedTivaMe {
-    gold: number,
-    score: number,
+    id: number,
+    display_name: string,
+    data: {
+        gold: number,
+        score: number,
+    }
 }
 
 export interface MedTivaField extends MedTivaFieldPosition {
@@ -26,6 +30,8 @@ export interface MedTivaCity extends MedTivaField {
         danger_level: number,
         units: MedTivaUnitBag,
         buildings: MedTivaBuildingBag,
+    } | {
+        hidden: true,
     }
 }
 
@@ -36,6 +42,12 @@ export interface MedTivaCave extends MedTivaField {
         monsters: MedTivaUnitBag,
         ticks_until_spawn: number
     }
+}
+
+export function is_not_hidden<
+    NARROWED_CITY extends Omit<MedTivaCity, 'data'> & { data: Exclude<MedTivaCity['data'], { hidden: true }> }
+>(city: MedTivaCity): city is NARROWED_CITY {
+    return ('hidden' in city.data) == false;
 }
 
 export function is_plane(field: MedTivaField): field is MedTivaPlane {

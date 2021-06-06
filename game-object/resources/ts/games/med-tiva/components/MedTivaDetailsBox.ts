@@ -2,6 +2,7 @@ import { is_cave, is_city, is_plane, MedTivaCave, MedTivaCity, MedTivaField, Med
 import { MedTivaFieldTypeHelper as MedTivaFieldTypes } from "../consts/MedTivaFieldTypes";
 import { SelectFieldEvent } from "../events/SelectFieldEvent";
 import { MedTivaUnit } from "../structs/MedTivaUnit";
+import { MedTivaUnitBag } from "../structs/MedTivaUnitBag";
 import { get_element_by_selector_or_fail } from "../utils/dom-helpers";
 import { MedTivaApp } from "./MedTivaApp";
 
@@ -59,7 +60,7 @@ class MedTivaDetailsBoxLogic {
 
     public fill_info_box_with_plane(plane: MedTivaPlane) {
         this.parent.elements.data.innerHTML = `
-        <h1>Plane</h1>
+        <h2>Plane</h2>
         <p>
             Just a plane field.
         </p>
@@ -67,33 +68,56 @@ class MedTivaDetailsBoxLogic {
     }
 
     public fill_info_box_with_city(city: MedTivaCity) {
+        const data = city.data;
+        if ('hidden' in data) {
+            return this.parent.elements.data.innerHTML = `
+                <h2>City</h2>
+                <p>
+                You have no information about this city.
+                </p>
+                `;
+        }
+        const details = this.table_for_unit_bag(data.units);
+        const general = this.table([
+            ['player|center bold', data.player_id],
+        ])
         this.parent.elements.data.innerHTML = `
-        <h1>City</h1>
-        <p>
-
-        `;
+    <h2>City</h2>
+    <h3>General</h3>
+    ${general}
+    <h3 class="center">Units</h3>
+    ${details}
+    `;
     }
 
-    public fill_info_box_with_cave(cave: MedTivaCave) {
+    public fill_info_box_with_cave(cave: MedTivaCave): void {
         let amount_count = cave.data.monsters.goblin.count
             + cave.data.monsters.villager.count
             + cave.data.monsters.footman.count;
         let amount_text = this.verbalize_amount(amount_count);
-        let monster_list = Object.entries(cave.data.monsters).map(([key, monster]: [string, MedTivaUnit]) => {
-            return [
-                key,
-                monster.count,
-                monster.level,
-            ];
-        });
-        let details_table = this.table(monster_list);
+        const details = this.table_for_unit_bag(cave.data.monsters);
         this.parent.elements.data.innerHTML = `
-        <h1>Cave</h1>
+        <h2>Cave</h2>
         <p>
             A cave with ${amount_text} monsters, guarding possible treasures.
         </p>
-        ${details_table}
+        <h3 class="center">Monsters</h3>
+        ${details}
         `;
+    }
+
+    public table_for_unit_bag(units: MedTivaUnitBag): string {
+        let unit_list = [
+            ["Name|bold center", "Amount|bold center", "Level|bold center"],
+            ...Object.entries(units).map(([key, unit]: [string, MedTivaUnit]) => {
+                return [
+                    key,
+                    unit.count,
+                    unit.level,
+                ];
+            })
+        ];
+        return this.table(unit_list);
     }
 
     public verbalize_amount(amount: number): string {
@@ -104,13 +128,17 @@ class MedTivaDetailsBoxLogic {
     }
 
     public table(list: Array<Array<string | number>>) {
-        const make_column_element = (value: string | number, extra_attrs: string = ''): string => {
-            return `<td ${extra_attrs}>${value}</td>`;
+        const make_column_element = (value: string | number): string => {
+            let cname = "";
+            if (typeof value === "string") {
+                [value, cname] = value.split('|');
+            }
+            return `<td class="${cname || ""}">${value}</td>`;
         }
         const rows = list.map((value: Array<number | string>) => {
             return [
                 '<tr>',
-                value.map((value) => make_column_element(value)).join(''),
+                value.map(make_column_element).join(''),
                 '</tr>'
             ].join('');
         }).join('');

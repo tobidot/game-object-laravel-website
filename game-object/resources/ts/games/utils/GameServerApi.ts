@@ -1,3 +1,5 @@
+import { MedTivaMe } from "../med-tiva/api/MedTivaApiStructs";
+
 type MappedData = { [key: string]: any };
 
 export class GameServerApi {
@@ -44,13 +46,13 @@ export class GameServerApi {
         });
     }
 
-    public get_me(): object {
+    public get_me(): Promise<MappedData> {
         const target = this.base_uri + "/me";
         const data = {};
         return this.standard_fetch(target, data);
     }
 
-    public get_players(): object {
+    public get_players(): Promise<MappedData> {
         const target = this.base_uri + "/players";
         const data = {};
         return this.standard_fetch(target, data);

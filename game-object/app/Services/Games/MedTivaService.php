@@ -61,6 +61,19 @@ class MedTivaService extends GameService
         $field->save();
     }
 
+    public function getFieldsHook(MapField $field): array
+    {
+        $player = player();
+        if ($player === null) return [$field];
+        if (!array_key_exists('player_id', $field->data) || $field->data['player_id'] === $player->id) return [$field];
+        $field->data = [
+            'hidden' => true
+        ];
+        return [
+            $field,
+        ];
+    }
+
     protected function newField(int $x, int $y): MapField
     {
         $base_type = random_int(0, count(MedTivaFieldBaseType::ALL) - 1);
