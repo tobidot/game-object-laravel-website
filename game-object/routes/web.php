@@ -24,6 +24,8 @@ Route::group([], function () {
     Route::get('/', function () {
         return view('welcome');
     });
+
+    Route::view('/impressum', 'static.impressum')->name('impressum');
 });
 
 

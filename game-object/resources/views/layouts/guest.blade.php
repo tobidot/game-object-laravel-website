@@ -19,7 +19,8 @@
     <body  class="min-h-screen bg-gray-100">
         <div class="font-sans text-gray-900 antialiased">
             <x-navigation :items="[
-                [__('Lobbies'),'game-sessions']
+                [__('Lobbies'),'game-sessions'],
+                [__('Impressum'),'impressum'],
             ]">
             </x-navigation>
 
